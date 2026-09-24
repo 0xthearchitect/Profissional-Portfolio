@@ -110,7 +110,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 .logo { display: inline-flex; align-items: center; }
-.logo-img { height: 34px; width: auto; }
+.logo-img { height: 48px; width: auto; }
 .logo-img + .logo-text { display: none; }
 .logo-text {
   font-family: var(--font-sans);
@@ -128,6 +128,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-weight: 400;
 }
 .logo--sm .logo-text { font-size: 1rem; }
+.logo--sm .logo-img { height: 43px; }
 
 .nav { display: flex; gap: 34px; }
 .nav-link {
