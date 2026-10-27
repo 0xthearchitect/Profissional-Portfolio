@@ -3,11 +3,22 @@
 
   var root = document.documentElement;
 
+  function syncIllustrations() {
+    var attribute = root.getAttribute('data-theme') === 'light' ? 'data-src-light' : 'data-src-dark';
+    document.querySelectorAll('img[data-src-dark]').forEach(function (img) {
+      var source = img.getAttribute(attribute);
+      if (source && img.getAttribute('src') !== source) img.src = source;
+    });
+  }
+
+  syncIllustrations();
+
   /* ---------- Theme toggle ---------- */
   var themeToggle = document.getElementById('themeToggle');
   themeToggle.addEventListener('click', function () {
     var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     root.setAttribute('data-theme', next);
+    syncIllustrations();
     try { localStorage.setItem('theme', next); } catch (e) {}
   });
 
