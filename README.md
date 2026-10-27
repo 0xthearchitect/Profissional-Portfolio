@@ -15,18 +15,23 @@ assets/illustrations/      os teus desenhos
 
 ## Ilustrações
 
-Cada espaço reservado mostra o nome do ficheiro esperado. Coloca o desenho em
-`assets/illustrations/` com esse nome e ele aparece automaticamente:
+As imagens aprovadas no Penpot ficam em `assets/illustrations/`. As cinco
+ilustrações têm uma versão para cada tema; o botão de tema troca também os
+ficheiros apresentados. O logótipo original é partilhado pelos dois temas.
+As ilustrações são servidas em WebP otimizado, mantendo a resolução dos PNG do
+Penpot. O logótipo mantém o PNG original e recebe um filtro de contraste por CSS
+no tema claro.
 
-| Ficheiro           | Secção                                  |
-|--------------------|-----------------------------------------|
-| `logo.svg`         | Logótipo no cabeçalho (substitui o texto) |
-| `hero.svg`         | Hero — figura com capuz + janelas       |
-| `about.svg`        | 01. About Me — globo / cubo             |
-| `open-source.svg`  | 04. Open Source — octocat               |
-| `background.svg`   | 06. Background — cubos empilhados       |
-| `contact.svg`      | 08. Contact — avião de papel            |
+| Tema escuro | Tema claro | Secção |
+| --- | --- | --- |
+| `logo.png` | `logo.png` | Cabeçalho e rodapé |
+| `hero.webp` | `hero-light.webp` | Início |
+| `about.webp` | `about-light.webp` | 01. About Me |
+| `open-source.webp` | `open-source-light.webp` | 04. Open Source |
+| `background.webp` | `background-light.webp` | 06. Background |
+| `contact.webp` | `contact-light.webp` | 08. Contact |
 
-Podes usar `.png`/`.webp` em vez de `.svg`: muda só o `src` no `index.html`.
-Para desenhos em traço que funcionem nos dois temas, usa SVG com
-`stroke="currentColor"` ou PNG com fundo transparente.
+Para substituir uma ilustração, mantém estes nomes ou atualiza `src`,
+`data-src-dark` e `data-src-light` no `index.html`. As imagens abaixo da primeira
+secção usam carregamento diferido. Os espaços reservados continuam disponíveis
+como alternativa caso um ficheiro não carregue.

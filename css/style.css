@@ -111,6 +111,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .logo { display: inline-flex; align-items: center; }
 .logo-img { height: 48px; width: auto; }
+[data-theme="light"] .logo-img { filter: invert(1) grayscale(1); }
 .logo-img + .logo-text { display: none; }
 .logo-text {
   font-family: var(--font-sans);
