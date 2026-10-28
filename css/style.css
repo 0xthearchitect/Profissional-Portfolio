@@ -15,6 +15,7 @@
   --line-faint: rgba(236, 228, 204, 0.1);
   --accent: #ece4cc;
   --accent-ink: #0c0e0f;
+  --illustration-blend: lighten;
 
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -26,9 +27,9 @@
 }
 
 [data-theme="light"] {
-  --bg: #f4efe1;
-  --bg-elev: #ede7d6;
-  --surface: #fbf8ef;
+  --bg: #f8f0d8;            /* warm cream */
+  --bg-elev: #efe5c9;
+  --surface: #fcf5df;
   --text: #16191b;
   --text-muted: #4d4b45;
   --text-dim: #85817a;
@@ -36,7 +37,8 @@
   --line-soft: rgba(22, 25, 27, 0.25);
   --line-faint: rgba(22, 25, 27, 0.1);
   --accent: #16191b;
-  --accent-ink: #f4efe1;
+  --accent-ink: #f8f0d8;
+  --illustration-blend: darken;
 }
 
 /* ---------- Base ---------- */
@@ -290,12 +292,20 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
    placeholder is shown with the expected filename. */
 .illustration {
   position: relative;
+  isolation: isolate;
+  background: var(--bg);
   margin: 0;
   display: grid;
   place-items: center;
   min-height: 220px;
 }
-.illustration img { width: 100%; height: 100%; object-fit: contain; }
+.illustration img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Merge the paper/black backdrop into the page, retaining ink and highlights. */
+  mix-blend-mode: var(--illustration-blend);
+}
 .illustration-hint { display: none; }
 
 .illustration.is-empty {
