@@ -37,6 +37,9 @@
       <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/><path d="M7 6.5h.01M7 17.5h.01M11 6.5h6M11 17.5h6"/></symbol>
       <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M7 10h3v-3l-3.5-3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1-3 3l-6-6a6 6 0 0 1-8-8z"/></symbol>
       <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 9l3 3-3 3M12 15h5"/></symbol>
+      <symbol id="i-honeypot" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="4" rx="1"/><path d="M7 7l-2 4v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8l-2-4M5 11h4v3a1.5 1.5 0 0 0 3 0v-3h7"/><path d="M9 18h6"/></symbol>
+      <symbol id="i-workspace" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 8h20M8 8v13M5 5.5h.01M8 5.5h.01M11 11h8v5h-3l-3 2v-2h-2z"/></symbol>
+      <symbol id="i-mail-shield" viewBox="0 0 24 24"><path d="M11 19H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3M2 6l10 7 10-7"/><path d="M18 11l5 2v4c0 3-5 5-5 5s-5-2-5-5v-4zM15.5 16.5l1.7 1.5 3.3-3.2"/></symbol>
       <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4M12 15v2"/></symbol>
       <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></symbol>
       <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></symbol>
@@ -65,8 +68,8 @@
         <a href="#home" class="nav-link active">Home</a>
         <a href="#experience" class="nav-link">Experience</a>
         <a href="#projects" class="nav-link">Projects</a>
-        <a href="#skills" class="nav-link">Skills</a>
         <a href="#open-source" class="nav-link">Open Source</a>
+        <a href="#skills" class="nav-link">Skills</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
 
@@ -232,7 +235,7 @@
                 <a href="https://github.com/0xthearchitect/mimic" class="link-arrow" target="_blank" rel="noopener">View Project <svg class="icon"><use href="#i-arrow"/></svg></a>
               </div>
             </div>
-            <div class="project-icon"><svg class="icon"><use href="#i-terminal"/></svg></div>
+            <div class="project-icon" aria-hidden="true"><svg class="icon"><use href="#i-honeypot"/></svg></div>
           </article>
 
           <article class="card project">
@@ -245,7 +248,7 @@
                 <a href="https://github.com/0xthearchitect/pocketme" class="link-arrow" target="_blank" rel="noopener">View Project <svg class="icon"><use href="#i-arrow"/></svg></a>
               </div>
             </div>
-            <div class="project-icon"><svg class="icon"><use href="#i-server"/></svg></div>
+            <div class="project-icon" aria-hidden="true"><svg class="icon"><use href="#i-workspace"/></svg></div>
           </article>
 
           <article class="card project">
@@ -258,7 +261,7 @@
                 <a href="https://github.com/0xadamastor/C.A.L.M.A." class="link-arrow" target="_blank" rel="noopener">View Project <svg class="icon"><use href="#i-arrow"/></svg></a>
               </div>
             </div>
-            <div class="project-icon"><svg class="icon"><use href="#i-shield"/></svg></div>
+            <div class="project-icon" aria-hidden="true"><svg class="icon"><use href="#i-mail-shield"/></svg></div>
           </article>
         </div>
       </div>
@@ -283,38 +286,17 @@
         </div>
 
         <div class="card stats">
-          <div class="stat"><p class="stat-label">Repositories</p><p class="stat-value" data-count="19">19</p></div>
-          <div class="stat"><p class="stat-label">Contributions</p><p class="stat-value" data-count="1047">1047</p></div>
-          <div class="stat"><p class="stat-label">Followers</p><p class="stat-value" data-count="5">5</p></div>
+          <div class="stat"><p class="stat-label">Public repositories</p><p class="stat-value" id="github-repositories">—</p></div>
+          <div class="stat"><p class="stat-label">Contributions (last year)</p><p class="stat-value" id="github-contributions">—</p></div>
+          <div class="stat"><p class="stat-label">Followers</p><p class="stat-value" id="github-followers">—</p></div>
         </div>
 
         <h3 class="sub-title">Featured Repositories</h3>
-        <ul class="card repo-list">
-          <li class="repo">
-            <svg class="icon repo-icon"><use href="#i-shield"/></svg>
-            <div class="repo-info">
-              <a href="https://github.com/0xthearchitect/WhatIf" class="repo-name" target="_blank" rel="noopener">WhatIf</a>
-              <p class="repo-desc">Automated security scanning tool</p>
-            </div>
-            <span class="repo-stars"><svg class="icon"><use href="#i-star"/></svg> 1</span>
-          </li>
-          <li class="repo">
-            <svg class="icon repo-icon"><use href="#i-file"/></svg>
-            <div class="repo-info">
-              <a href="https://github.com/0xthearchitect/NataBase" class="repo-name" target="_blank" rel="noopener">NataBase</a>
-              <p class="repo-desc">Food management mobile application</p>
-            </div>
-            <span class="repo-stars"><svg class="icon"><use href="#i-star"/></svg> 2</span>
-          </li>
-          <li class="repo">
-            <svg class="icon repo-icon"><use href="#i-terminal"/></svg>
-            <div class="repo-info">
-              <a href="https://github.com/0xthearchitect/Anvil" class="repo-name" target="_blank" rel="noopener">Anvil</a>
-              <p class="repo-desc">Binary and script creation automation</p>
-            </div>
-            <span class="repo-stars"><svg class="icon"><use href="#i-star"/></svg> 0</span>
-          </li>
+        <ul class="card repo-list" id="github-repos" aria-label="Featured repositories">
+          <li class="repo-message">Loading repositories…</li>
         </ul>
+        <p class="github-status" id="github-status" role="status">Loading GitHub data…</p>
+        <noscript><p>Enable JavaScript to load GitHub data, or <a href="https://github.com/0xthearchitect?tab=repositories">view repositories on GitHub</a>.</p></noscript>
       </div>
     </section>
 
@@ -437,5 +419,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script id="github-snapshot" type="application/json">{"username":"0xthearchitect","updated_at":"2026-10-29T09:37:09.181Z","public_repos":20,"followers":6,"contributions":738,"repositories":[{"name":"WhatIf","description":"**WhatIf?** is a comprehensive automated reconnaissance and vulnerability scanning tool designed for security professionals, penetration testers, and ethical hackers.","stargazers_count":1},{"name":"NataBase","description":"In NataBase your Nata is Based.","stargazers_count":2},{"name":"Anvil","description":"Anvil is a cross-platform tool to automate the creation of binaries and scripts from Python projects. It can build standalone executables, inspect projects, manage assets, and in the future, reconstruct executables into readable source code (reverse build).","stargazers_count":0}]}</script>
+  <script src="js/github.js"></script>
 </body>
 </html>

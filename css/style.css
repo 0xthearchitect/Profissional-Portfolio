@@ -484,6 +484,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .stat-value { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 600; margin-top: 4px; }
 
 .repo-list { padding: 4px 22px; }
+.repo-message { padding: 24px 0; color: var(--text-muted); }
+.github-status { margin-top: 12px; font-size: .8rem; color: var(--text-muted); }
+.repo-info { min-width: 0; overflow-wrap: anywhere; }
 .repo {
   display: grid;
   grid-template-columns: 34px 1fr auto;
