@@ -31,7 +31,13 @@ button { font: inherit; color: inherit; }
 .brand img, .hero-mark, .contact-mark, .p1 img { mix-blend-mode: screen; display: block; }
 
 /* ---------- Header ---------- */
-.site-header { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; padding-bottom: 12px; }
+.site-header { position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding-top: 28px; padding-bottom: 12px;
+  /* solid black: the triangle's screen blend needs a black backdrop, and the bar is painted edge to edge */
+  background: #000; box-shadow: 0 0 0 100vmax #000; clip-path: inset(0 -100vmax); transition: padding .3s; }
+.site-header.stuck { padding-top: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); clip-path: inset(0 -100vmax -1px); }
+.site-header.stuck .brand, .site-header.stuck .brand img { width: 40px; height: 40px; }
+.brand, .brand img { transition: width .3s, height .3s; }
+.nav a[aria-current="true"] { color: var(--cream); }
 .brand { display: block; width: 52px; height: 52px; }
 .nav { display: flex; align-items: center; gap: clamp(16px, 2.5vw, 36px); font-size: 16px; }
 .nav a { color: var(--muted); text-decoration: none; transition: color .2s; }
@@ -60,7 +66,7 @@ button { font: inherit; color: inherit; }
 .hero-facts .push { margin-left: auto; }
 
 /* ---------- Sections ---------- */
-.section { padding-top: 120px; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 20px; }
+.section { padding-top: 120px; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 0; }
 .idx { font-size: 14px; color: var(--muted); }
 .h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(56px, 6.2vw, 88px); line-height: .95; letter-spacing: .01em; text-shadow: 3px 3px 0 #000, 6px 6px 0 var(--cream); }
 .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 48px; flex-wrap: wrap; }

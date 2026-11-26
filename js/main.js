@@ -136,6 +136,24 @@
     window.addEventListener('blur', function () { shift = false; press('[data-mode-set="build"]', false); setMode(); });
   }
 
+  /* ---------- Cabeçalho fixo: compacto ao descer, e marca a secção onde estás ---------- */
+  var header = document.querySelector('.site-header');
+  var onScroll = function () { header.classList.toggle('stuck', window.scrollY > 40); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  var links = {};
+  document.querySelectorAll('.nav a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        Object.keys(links).forEach(function (id) { links[id].removeAttribute('aria-current'); });
+        if (links[entry.target.id]) links[entry.target.id].setAttribute('aria-current', 'true');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function (section) { spy.observe(section); });
+  }
+
   var saved = 'pt';
   try { saved = localStorage.getItem('lang') === 'en' ? 'en' : 'pt'; } catch (e) {}
   if (saved === 'en') setLang('en'); else renderKeys();
