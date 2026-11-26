@@ -1,24 +1,39 @@
 {
   "username": "0xthearchitect",
-  "updated_at": "2026-11-26T08:28:41.841Z",
+  "updated_at": "2026-11-26T12:25:05.858Z",
   "public_repos": 21,
   "followers": 7,
   "contributions": 717,
   "repositories": [
     {
-      "name": "WhatIf",
-      "description": "**WhatIf?** is a comprehensive automated reconnaissance and vulnerability scanning tool designed for security professionals, penetration testers, and ethical hackers.",
+      "full_name": "0xthearchitect/beatbox",
+      "name": "beatbox",
+      "description": "🧊Disposable environments on your own computer",
+      "stargazers_count": 12
+    },
+    {
+      "full_name": "0xthearchitect/Mimic",
+      "name": "Mimic",
+      "description": "On stage, everyone thinks they're the star. But the only thing they are, is the show.",
+      "stargazers_count": 3
+    },
+    {
+      "full_name": "0xthearchitect/Pocketme",
+      "name": "Pocketme",
+      "description": "Pocketme — Personal self-hosted",
       "stargazers_count": 1
     },
     {
-      "name": "NataBase",
-      "description": "In NataBase your Nata is Based.",
-      "stargazers_count": 2
+      "full_name": "Reinvicta-Tech/caraDBela",
+      "name": "caraDBela",
+      "description": "A tua IoT de forma bela: vigia os dispositivos da tua rede, deteta acessos suspeitos e avisa-te.",
+      "stargazers_count": 0
     },
     {
-      "name": "Anvil",
-      "description": "Anvil is a cross-platform tool to automate the creation of binaries and scripts from Python projects. It can build standalone executables, inspect projects, manage assets, and in the future, reconstruct executables into readable source code (reverse build).",
-      "stargazers_count": 0
+      "full_name": "0xadamastor/C.A.L.M.A.",
+      "name": "C.A.L.M.A.",
+      "description": "Containerized Automated Lazy Mail Anti-nasties",
+      "stargazers_count": 2
     }
   ]
 }

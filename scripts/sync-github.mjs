@@ -17,7 +17,10 @@ async function request(url, api = true) {
 const [profile, calendar, repositories] = await Promise.all([
   request(`https://api.github.com/users/${username}`),
   request(`https://github.com/users/${username}/contributions`, false),
-  Promise.all(featuredRepositories.map(name => request(`https://api.github.com/repos/${username}/${encodeURIComponent(name)}`)))
+  Promise.all(featuredRepositories.map(entry => {
+    const [owner, name] = entry.includes('/') ? entry.split('/') : [username, entry];
+    return request(`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}`);
+  }))
 ]);
 const heading = calendar.match(/<h2\b[^>]*\bid="js-contribution-activity-description"[^>]*>([\s\S]*?)<\/h2>/i);
 const total = heading?.[1].replace(/<[^>]*>/g, ' ').match(/([\d,]+)\s+contributions?\s+in the last year/i);
@@ -28,9 +31,13 @@ const snapshot = {
   public_repos: profile.public_repos,
   followers: profile.followers,
   contributions: Number(total[1].replaceAll(',', '')),
-  repositories: repositories.map(repo => {
-    if (repo.private || repo.owner?.login.toLowerCase() !== username.toLowerCase()) throw new Error('Unexpected repository.');
-    return { name: repo.name, description: repo.description, stargazers_count: repo.stargazers_count };
+  repositories: repositories.map((repo, i) => {
+    const entry = featuredRepositories[i];
+    const expected = (entry.includes('/') ? entry : `${username}/${entry}`).toLowerCase();
+    // Only the configured public repositories may enter the snapshot.
+    if (repo.private || repo.full_name?.toLowerCase() !== expected) throw new Error(`Unexpected repository: ${entry}.`);
+    if (!Number.isInteger(repo.stargazers_count) || repo.stargazers_count < 0) throw new Error(`Invalid stars: ${entry}.`);
+    return { full_name: repo.full_name, name: repo.name, description: repo.description, stargazers_count: repo.stargazers_count };
   })
 };
 for (const key of ['public_repos', 'followers', 'contributions']) {

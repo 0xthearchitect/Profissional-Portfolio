@@ -1,425 +1,420 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Architect — Cybersecurity &amp; Software</title>
-  <meta name="description" content="I design, build and secure systems — with a focus on cybersecurity, low-level software and open source." />
-  <meta name="theme-color" content="#0c0e0f" />
+  <title>The Architect — Cibersegurança e software</title>
+  <meta name="description" content="Cibersegurança e software: construo sistemas e testo-os até partirem." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="assets/brand/triangle.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Instrument+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-
-  <!-- Apply saved theme before paint to avoid a flash -->
-  <script>
-    try {
-      var t = localStorage.getItem('theme');
-      if (t) document.documentElement.setAttribute('data-theme', t);
-    } catch (e) {}
-  </script>
+  <!-- Apply the saved language before paint -->
+  <script>try { if (localStorage.getItem('lang') === 'en') document.documentElement.lang = 'en'; } catch (e) {}</script>
 </head>
 <body>
+  <a class="skip" href="#main" data-en="Skip to content">Saltar para o conteúdo</a>
 
-  <!-- ============ ICON SPRITE ============ -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <defs>
-      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
-      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
-      <symbol id="i-hat" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></symbol>
-      <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol>
-      <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></symbol>
-      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
-      <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
-      <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/><path d="M7 6.5h.01M7 17.5h.01M11 6.5h6M11 17.5h6"/></symbol>
-      <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M7 10h3v-3l-3.5-3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1-3 3l-6-6a6 6 0 0 1-8-8z"/></symbol>
-      <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 9l3 3-3 3M12 15h5"/></symbol>
-      <symbol id="i-honeypot" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="4" rx="1"/><path d="M7 7l-2 4v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8l-2-4M5 11h4v3a1.5 1.5 0 0 0 3 0v-3h7"/><path d="M9 18h6"/></symbol>
-      <symbol id="i-workspace" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 8h20M8 8v13M5 5.5h.01M8 5.5h.01M11 11h8v5h-3l-3 2v-2h-2z"/></symbol>
-      <symbol id="i-mail-shield" viewBox="0 0 24 24"><path d="M11 19H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3M2 6l10 7 10-7"/><path d="M18 11l5 2v4c0 3-5 5-5 5s-5-2-5-5v-4zM15.5 16.5l1.7 1.5 3.3-3.2"/></symbol>
-      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4M12 15v2"/></symbol>
-      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></symbol>
-      <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></symbol>
-      <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
-      <symbol id="i-cert" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M10 13l-1 5 3-1.5 3 1.5-1-5"/></symbol>
-      <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
-      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
-      <symbol id="i-hammer" viewBox="0 0 24 24"><path d="M15 12l-8.5 8.5a2.1 2.1 0 0 1-3-3L12 9"/><path d="M17.6 15L22 10.6M20.9 11.7l-6.6-6.6a3 3 0 0 0-4.2 0L8 7.2l6.6 6.6"/></symbol>
-      <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
-      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
-      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
-      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
-    </defs>
-  </svg>
-
-  <!-- ============ HEADER ============ -->
-  <header class="site-header" id="top">
-    <div class="container header-inner">
-      <a href="#home" class="logo" aria-label="The Architect — home">
-        <!-- Original logo from Penpot -->
-        <img src="assets/illustrations/logo.png" alt="The Architect" class="logo-img" width="2048" height="592" decoding="async" onerror="this.remove()" />
-        <span class="logo-text">The<span class="logo-a">A</span>rchitect</span>
-      </a>
-
-      <nav class="nav" id="nav" aria-label="Main">
-        <a href="#home" class="nav-link active">Home</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#open-source" class="nav-link">Open Source</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </nav>
-
-      <div class="header-actions">
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light / dark mode">
-          <span class="theme-toggle-knob">
-            <svg class="icon icon-moon"><use href="#i-moon"/></svg>
-            <svg class="icon icon-sun"><use href="#i-sun"/></svg>
-          </span>
-        </button>
-        <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
-          <svg class="icon"><use href="#i-menu"/></svg>
-        </button>
-      </div>
-    </div>
+  <header class="site-header wrap" id="top">
+    <a href="#top" class="brand" aria-label="The Architect"><img src="assets/brand/triangle.jpg" alt="" width="52" height="52" /></a>
+    <nav class="nav" aria-label="Principal" data-en-label="Main">
+      <a href="#percurso" data-en="Experience">Percurso</a>
+      <a href="#projetos" data-en="Projects">Projetos</a>
+      <a href="#ferramentas" data-en="Tools">Ferramentas</a>
+      <a href="#contacto" data-en="Contact">Contacto</a>
+      <span class="langs mono">
+        <button type="button" class="lang" data-lang="pt" aria-pressed="true">PT</button>
+        <button type="button" class="lang" data-lang="en" aria-pressed="false">EN</button>
+      </span>
+    </nav>
   </header>
 
-  <main>
-
+  <main id="main">
     <!-- ============ HERO ============ -->
-    <section class="hero section" id="home">
-      <div class="container hero-grid">
-        <div class="hero-content corner-frame">
-          <p class="eyebrow">Cybersecurity <span>•</span> Software <span>•</span> Open Source</p>
-          <h1 class="hero-title">I'm The Architect</h1>
-          <p class="hero-lead">
-            I design, build and secure systems —<br />
-            with a focus on cybersecurity, low-level<br />
-            software and open source.
-          </p>
-          <div class="btn-row">
-            <a href="#experience" class="btn btn-primary">View Experience <svg class="icon"><use href="#i-arrow"/></svg></a>
-            <a href="#projects" class="btn">View Projects</a>
-            <a href="#contact" class="btn">Contact Me</a>
-          </div>
-          <p class="hero-meta">
-            <svg class="icon"><use href="#i-pin"/></svg>
-            Based in Portugal <span class="dot">•</span> Available for remote opportunities
-          </p>
-        </div>
-
-        <!-- Approved Penpot illustration, with a variant for each theme -->
-        <figure class="illustration illustration--hero">
-          <img src="assets/illustrations/hero.webp" data-src-dark="assets/illustrations/hero.webp" data-src-light="assets/illustrations/hero-light.webp" width="1448" height="1086" alt="" fetchpriority="high" decoding="async" onload="this.parentElement.classList.remove('is-empty')" onerror="this.parentElement.classList.add('is-empty')" />
-          <figcaption class="illustration-hint">hero.webp</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ============ 01. ABOUT ============ -->
-    <section class="section" id="about">
-      <div class="container about-grid">
-        <div>
-          <p class="section-label"><span>01.</span> About Me</p>
-          <h2 class="section-title">More than just a developer.</h2>
-          <div class="prose">
-            <p>I'm a cybersecurity enthusiast and software developer with a passion for solving complex problems, understanding how systems work, and making them more secure.</p>
-            <p>I enjoy working close to the metal, exploring low-level concepts, building tools, and contributing to open source.</p>
-            <p>Always learning. Always building.</p>
-          </div>
-          <ul class="role-list">
-            <li><svg class="icon"><use href="#i-shield"/></svg> Cybersecurity Engineer</li>
-            <li><svg class="icon"><use href="#i-hat"/></svg> Software Developer</li>
-            <li><svg class="icon"><use href="#i-github"/></svg> Open Source Contributor</li>
-          </ul>
-        </div>
-
-        <!-- About illustration from Penpot -->
-        <figure class="illustration illustration--about framed">
-          <img src="assets/illustrations/about.webp" data-src-dark="assets/illustrations/about.webp" data-src-light="assets/illustrations/about-light.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async" onload="this.parentElement.classList.remove('is-empty')" onerror="this.parentElement.classList.add('is-empty')" />
-          <figcaption class="illustration-hint">about.webp</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ============ 02. EXPERIENCE ============ -->
-    <section class="section" id="experience">
-      <div class="container">
-        <p class="section-label"><span>02.</span> Experience</p>
-        <h2 class="section-title">Where I've worked.</h2>
-
-        <ol class="timeline">
-          <li class="timeline-item">
-            <div class="timeline-date">Mar 2026 – Jul 2026</div>
-            <div class="timeline-body">
-              <h3 class="job-title">Cybersecurity Specialist <span class="muted">· Internship</span></h3>
-              <p class="job-company">Kodekrafters</p>
-              <p class="job-location"><svg class="icon"><use href="#i-pin"/></svg> Maia, Porto, Portugal · On-site</p>
-            </div>
-            <div class="timeline-stack">
-              <p class="stack-label">Tech Stack</p>
-              <ul class="tags">
-                <li>Cybersecurity</li><li>Programming</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="timeline-item">
-            <div class="timeline-date">Mar 2026 – Jul 2026</div>
-            <div class="timeline-body">
-              <h3 class="job-title">Software Specialist</h3>
-              <p class="job-company">Kodekrafters</p>
-              <p class="job-location"><svg class="icon"><use href="#i-pin"/></svg> Maia, Porto, Portugal</p>
-              <ul class="bullets">
-                <li>Kicking off new projects and finishing unfinished older ones</li>
-              </ul>
-            </div>
-            <div class="timeline-stack">
-              <p class="stack-label">Tech Stack</p>
-              <ul class="tags">
-                <li>Software Development</li><li>Programming</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="timeline-item">
-            <div class="timeline-date">Feb 2024 – Apr 2024</div>
-            <div class="timeline-body">
-              <h3 class="job-title">Web Developer <span class="muted">· Internship</span></h3>
-              <p class="job-company">SigmaCode</p>
-              <p class="job-location"><svg class="icon"><use href="#i-pin"/></svg> Porto, Portugal · On-site</p>
-            </div>
-            <div class="timeline-stack">
-              <p class="stack-label">Tech Stack</p>
-              <ul class="tags">
-                <li>SQL</li><li>C#</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="timeline-item">
-            <div class="timeline-date">Apr 2023 – Jun 2023</div>
-            <div class="timeline-body">
-              <h3 class="job-title">Web Developer <span class="muted">· Internship</span></h3>
-              <p class="job-company">Pluricosmética</p>
-              <p class="job-location"><svg class="icon"><use href="#i-pin"/></svg> Maia, Porto, Portugal</p>
-            </div>
-            <div class="timeline-stack">
-              <p class="stack-label">Tech Stack</p>
-              <ul class="tags">
-                <li>PHP</li><li>SQL</li>
-              </ul>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ============ 03. PROJECTS ============ -->
-    <section class="section" id="projects">
-      <div class="container">
-        <p class="section-label"><span>03.</span> Selected Work</p>
-        <h2 class="section-title">Projects I'm proud of.</h2>
-
-        <div class="projects">
-          <article class="card project">
-            <span class="project-num">01</span>
-            <div class="project-body">
-              <h3 class="card-title">Mimic</h3>
-              <p class="card-text">An interactive honeypot framework that emulates SSH, FTP, HTTP, Telnet and MySQL services to detect and log attacker activity.</p>
-              <div class="project-footer">
-                <ul class="tags"><li>Python</li><li>Honeypot</li><li>Security</li></ul>
-                <a href="https://github.com/0xthearchitect/mimic" class="link-arrow" target="_blank" rel="noopener">View Project <svg class="icon"><use href="#i-arrow"/></svg></a>
-              </div>
-            </div>
-            <div class="project-icon" aria-hidden="true"><svg class="icon"><use href="#i-honeypot"/></svg></div>
-          </article>
-
-          <article class="card project">
-            <span class="project-num">02</span>
-            <div class="project-body">
-              <h3 class="card-title">Pocketme</h3>
-              <p class="card-text">A self-hosted personal workspace with realtime chat, file management and a growing app store, built with Tauri.</p>
-              <div class="project-footer">
-                <ul class="tags"><li>TypeScript</li><li>Tauri</li><li>Self-hosted</li></ul>
-                <a href="https://github.com/0xthearchitect/pocketme" class="link-arrow" target="_blank" rel="noopener">View Project <svg class="icon"><use href="#i-arrow"/></svg></a>
-              </div>
-            </div>
-            <div class="project-icon" aria-hidden="true"><svg class="icon"><use href="#i-workspace"/></svg></div>
-          </article>
-
-          <article class="card project">
-            <span class="project-num">03</span>
-            <div class="project-body">
-              <h3 class="card-title">C.A.L.M.A.</h3>
-              <p class="card-text">Scans Gmail attachments with ML models, classifies them Clean / Suspicious / Infected and auto-labels the mailbox. Built with 0xadamastor.</p>
-              <div class="project-footer">
-                <ul class="tags"><li>Python</li><li>Machine Learning</li><li>Security</li></ul>
-                <a href="https://github.com/0xadamastor/C.A.L.M.A." class="link-arrow" target="_blank" rel="noopener">View Project <svg class="icon"><use href="#i-arrow"/></svg></a>
-              </div>
-            </div>
-            <div class="project-icon" aria-hidden="true"><svg class="icon"><use href="#i-mail-shield"/></svg></div>
-          </article>
+    <section class="hero wrap">
+      <div class="hero-text">
+        <h1 class="hero-title"><img src="assets/brand/wordmark.png" alt="The Architect" width="2048" height="592" /></h1>
+        <p class="hero-intro" data-en="I work in cybersecurity and software: I build systems and test them until they break.">Trabalho em cibersegurança e software: construo sistemas e testo-os até partirem.</p>
+        <div class="actions">
+          <a class="btn btn-main" href="#percurso" data-en="See my path">Ver o percurso</a>
+          <a class="btn btn-line" href="https://github.com/0xthearchitect" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-line" href="https://linkedin.com/in/0xthearchitect" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
+      <img class="hero-mark" src="assets/brand/triangle.jpg" alt="" width="436" height="436" />
+      <ul class="hero-facts mono">
+        <li><b id="github-contributions">—</b> <span data-en="contributions last year">contribuições no último ano</span></li>
+        <li><b id="github-repositories">—</b> <span data-en="public repositories">repositórios públicos</span></li>
+        <li data-en="CST Cybersecurity · ISTEC">CST Cibersegurança · ISTEC</li>
+        <li class="push">Porto, Portugal</li>
+      </ul>
     </section>
 
-    <!-- ============ 04. OPEN SOURCE ============ -->
-    <section class="section" id="open-source">
-      <div class="container">
-        <div class="os-head">
-          <div>
-            <p class="section-label"><span>04.</span> Open Source</p>
-            <h2 class="section-title">Contributions &amp; Repositories.</h2>
-            <p class="section-intro">I actively contribute to open source projects, both by creating tools and by helping others.</p>
-            <a href="https://github.com/0xthearchitect" class="btn" target="_blank" rel="noopener">View my GitHub <svg class="icon"><use href="#i-arrow"/></svg></a>
-          </div>
-
-          <!-- Open-source illustration from Penpot -->
-          <figure class="illustration illustration--os">
-            <img src="assets/illustrations/open-source.webp" data-src-dark="assets/illustrations/open-source.webp" data-src-light="assets/illustrations/open-source-light.webp" width="1448" height="1086" alt="" loading="lazy" decoding="async" onload="this.parentElement.classList.remove('is-empty')" onerror="this.parentElement.classList.add('is-empty')" />
-            <figcaption class="illustration-hint">open-source.webp</figcaption>
-          </figure>
-        </div>
-
-        <div class="card stats">
-          <div class="stat"><p class="stat-label">Public repositories</p><p class="stat-value" id="github-repositories">—</p></div>
-          <div class="stat"><p class="stat-label">Contributions (last year)</p><p class="stat-value" id="github-contributions">—</p></div>
-          <div class="stat"><p class="stat-label">Followers</p><p class="stat-value" id="github-followers">—</p></div>
-        </div>
-
-        <h3 class="sub-title">Featured Repositories</h3>
-        <ul class="card repo-list" id="github-repos" aria-label="Featured repositories">
-          <li class="repo-message">Loading repositories…</li>
+    <!-- ============ 01 PERCURSO ============ -->
+    <section class="section wrap" id="percurso">
+      <span class="idx mono">01</span>
+      <div class="section-head">
+        <h2 class="h2" data-en="Experience">Percurso</h2>
+        <ul class="stats mono">
+          <li><b>5</b><span data-en="years">anos</span></li>
+          <li><b>3</b><span data-en="internships">estágios</span></li>
+          <li><b>2</b><span data-en="courses">cursos</span></li>
         </ul>
-        <p class="github-status" id="github-status" role="status">Loading GitHub data…</p>
-        <noscript><p>Enable JavaScript to load GitHub data, or <a href="https://github.com/0xthearchitect?tab=repositories">view repositories on GitHub</a>.</p></noscript>
       </div>
+      <ol class="path">
+        <li>
+          <details name="percurso" open>
+            <summary>
+              <span class="yr">2026</span>
+              <span class="who"><b>Kodekrafters</b><span>Cybersecurity Specialist · Software Specialist</span></span>
+              <span class="kind mono" data-en="internship">estágio</span>
+              <span class="arrow" aria-hidden="true">↓</span>
+            </summary>
+            <div class="more">
+              <p data-en="Two roles at once: kicking off new projects and finishing older ones that had been left halfway.">Duas funções ao mesmo tempo: arrancar projetos novos e terminar projetos antigos que tinham ficado a meio.</p>
+              <dl>
+                <dt class="mono" data-en="when">quando</dt><dd><span>Mar – Jul 2026</span> · <span data-en="5 months">5 meses</span></dd>
+                <dt class="mono" data-en="where">onde</dt><dd>Maia, Porto</dd>
+                <dt class="mono">stack</dt><dd>Cybersecurity · Software Development</dd>
+              </dl>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="percurso">
+            <summary>
+              <span class="yr">2024–26</span>
+              <span class="who"><b>ISTEC</b><span data-en="CST, Cybersecurity">CST, Cibersegurança</span></span>
+              <span class="kind mono" data-en="education">formação</span>
+              <span class="arrow" aria-hidden="true">↓</span>
+            </summary>
+            <div class="more">
+              <p data-en="Higher technical course in cybersecurity at the Instituto Superior de Tecnologias Avançadas do Porto.">Curso técnico superior de cibersegurança no Instituto Superior de Tecnologias Avançadas do Porto.</p>
+              <dl>
+                <dt class="mono" data-en="when">quando</dt><dd><span data-en="Oct 2024 – Jul 2026">Out 2024 – Jul 2026</span> · <span data-en="22 months">22 meses</span></dd>
+                <dt class="mono" data-en="where">onde</dt><dd>Porto</dd>
+              </dl>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="percurso">
+            <summary>
+              <span class="yr">2024</span>
+              <span class="who"><b>SigmaCode</b><span>Web Developer</span></span>
+              <span class="kind mono" data-en="internship">estágio</span>
+              <span class="arrow" aria-hidden="true">↓</span>
+            </summary>
+            <div class="more">
+              <p data-en="Web development in C# and SQL, in the last year at ESAOF.">Desenvolvimento web em C# e SQL, no último ano da ESAOF.</p>
+              <dl>
+                <dt class="mono" data-en="when">quando</dt><dd><span data-en="Feb – Apr 2024">Fev – Abr 2024</span> · <span data-en="3 months">3 meses</span></dd>
+                <dt class="mono" data-en="where">onde</dt><dd>Porto</dd>
+                <dt class="mono">stack</dt><dd>C# · SQL</dd>
+              </dl>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="percurso">
+            <summary>
+              <span class="yr">2023</span>
+              <span class="who"><b>Pluricosmética</b><span>Web Developer</span></span>
+              <span class="kind mono" data-en="internship">estágio</span>
+              <span class="arrow" aria-hidden="true">↓</span>
+            </summary>
+            <div class="more">
+              <p data-en="First internship: web development in PHP and SQL, during ESAOF.">Primeiro estágio: desenvolvimento web em PHP e SQL, durante a ESAOF.</p>
+              <dl>
+                <dt class="mono" data-en="when">quando</dt><dd><span data-en="Apr – Jun 2023">Abr – Jun 2023</span> · <span data-en="3 months">3 meses</span></dd>
+                <dt class="mono" data-en="where">onde</dt><dd>Maia, Porto</dd>
+                <dt class="mono">stack</dt><dd>PHP · SQL</dd>
+              </dl>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="percurso">
+            <summary>
+              <span class="yr">2021–24</span>
+              <span class="who"><b>ESAOF</b><span data-en="IT Systems Management &amp; Programming">Gestão e Programação de Sistemas Informáticos</span></span>
+              <span class="kind mono" data-en="education">formação</span>
+              <span class="arrow" aria-hidden="true">↓</span>
+            </summary>
+            <div class="more">
+              <p data-en="Where it all started.">Onde tudo começou.</p>
+              <dl>
+                <dt class="mono" data-en="when">quando</dt><dd><span data-en="Sep 2021 – Jul 2024">Set 2021 – Jul 2024</span> · <span data-en="35 months">35 meses</span></dd>
+                <dt class="mono" data-en="where">onde</dt><dd>Porto</dd>
+              </dl>
+            </div>
+          </details>
+        </li>
+      </ol>
     </section>
 
-    <!-- ============ 05. SKILLS ============ -->
-    <section class="section" id="skills">
-      <div class="container">
-        <p class="section-label"><span>05.</span> Skills</p>
-        <h2 class="section-title">Technical Stack.</h2>
+    <!-- ============ 02 PROJETOS ============ -->
+    <section class="section wrap" id="projetos">
+      <span class="idx mono">02</span>
+      <div class="section-head">
+        <h2 class="h2" data-en="Projects">Projetos</h2>
+        <p class="lead" data-en="Five things I built and care about. Pick one to see what it is and how it works.">Cinco coisas que construí e de que gosto. Escolhe uma para ver o que é e como funciona.</p>
+      </div>
 
-        <div class="skills">
-          <div class="card skill">
-            <div class="skill-head"><svg class="icon icon-lg"><use href="#i-code"/></svg><h3 class="card-title">Programming Languages</h3></div>
-            <ul class="skill-list"><li>C</li><li>C++</li><li>Python</li><li>JavaScript</li><li>Rust</li><li>Bash</li><li>TypeScript</li></ul>
-          </div>
-          <div class="card skill">
-            <div class="skill-head"><svg class="icon icon-lg"><use href="#i-shield"/></svg><h3 class="card-title">Security</h3></div>
-            <ul class="skill-list"><li>Web Security</li><li>Network Security</li><li>Reverse Engineering</li><li>Malware Analysis</li><li>Cryptography</li><li>Forensics</li></ul>
-          </div>
-          <div class="card skill">
-            <div class="skill-head"><svg class="icon icon-lg"><use href="#i-server"/></svg><h3 class="card-title">Systems &amp; Infrastructure</h3></div>
-            <ul class="skill-list"><li>Linux</li><li>Windows</li><li>Docker</li><li>Kubernetes</li><li>Git</li></ul>
-          </div>
-          <div class="card skill">
-            <div class="skill-head"><svg class="icon icon-lg"><use href="#i-wrench"/></svg><h3 class="card-title">Tools &amp; Utilities</h3></div>
-            <ul class="skill-list"><li>Burp Suite</li><li>Wireshark</li><li>Metasploit</li><li>Nmap</li><li>VS Code</li></ul>
+      <div class="ptabs" role="tablist" aria-label="Projetos" data-en-label="Projects">
+        <button type="button" class="ptab" role="tab" id="tab-beatbox" aria-controls="p-beatbox" aria-selected="true"><img src="assets/projects/beatbox-logo.svg" alt="" width="36" height="36" />BeatBox <span class="stars mono" data-repo="0xthearchitect/beatbox" hidden></span></button>
+        <button type="button" class="ptab" role="tab" id="tab-mimic" aria-controls="p-mimic" aria-selected="false" tabindex="-1"><img src="assets/projects/mimic-logo.gif" alt="" width="36" height="36" />MIMIC <span class="stars mono" data-repo="0xthearchitect/Mimic" hidden></span></button>
+        <button type="button" class="ptab" role="tab" id="tab-pocketme" aria-controls="p-pocketme" aria-selected="false" tabindex="-1"><img src="assets/projects/pocketme-logo.png" alt="" width="36" height="36" />pocketme <span class="stars mono" data-repo="0xthearchitect/Pocketme" hidden></span></button>
+        <button type="button" class="ptab" role="tab" id="tab-caradbela" aria-controls="p-caradbela" aria-selected="false" tabindex="-1"><img src="assets/projects/caradbela-icon.svg" alt="" width="36" height="36" />CaraDBela <span class="stars mono" data-repo="Reinvicta-Tech/caraDBela" hidden></span></button>
+        <button type="button" class="ptab" role="tab" id="tab-calma" aria-controls="p-calma" aria-selected="false" tabindex="-1"><img src="assets/projects/calma-logo.png" alt="" width="36" height="36" />C.A.L.M.A. <span class="stars mono" data-repo="0xadamastor/C.A.L.M.A." hidden></span></button>
+      </div>
+
+      <!-- BeatBox -->
+      <div class="panel theme-beatbox" role="tabpanel" id="p-beatbox" aria-labelledby="tab-beatbox">
+        <div class="panel-id">
+          <img class="panel-logo" src="assets/projects/beatbox-logo.svg" alt="" width="96" height="96" />
+          <h3 class="pname" style="letter-spacing:.08em">BeatBox</h3>
+          <p class="tag">Break the box. Beat the box.</p>
+          <p class="desc" data-en="A cybersecurity lab on your own computer: real machines and networks you set up, attack, defend and throw away.">Um laboratório de cibersegurança no teu computador: máquinas e redes reais que montas, atacas, defendes e deitas fora.</p>
+          <dl class="facts">
+            <dt class="mono">stack</dt><dd>Rust · Tauri · QEMU</dd>
+            <dt class="mono" data-en="runs on">corre em</dt><dd data-en="Linux and Windows">Linux e Windows</dd>
+            <dt class="mono" data-en="footprint">peso</dt><dd data-en="a whole network ≈ 8 MB">uma rede inteira ≈ 8 MB</dd>
+          </dl>
+          <a class="repo-link" href="https://github.com/0xthearchitect/beatbox" target="_blank" rel="noopener"><span data-en="See it on GitHub">Ver no GitHub</span> ↗</a>
+        </div>
+        <div class="panel-how">
+          <figure class="shot" style="aspect-ratio:1360/900"><img src="assets/projects/beatbox.png" alt="Ecrã inicial do BeatBox" data-en-alt="BeatBox start screen" width="1360" height="900" loading="lazy" /></figure>
+          <div class="how">
+            <span class="mono" data-en="how it works">como funciona</span>
+            <ol>
+              <li><b class="n">01</b><b data-en="Build">Monta</b><span data-en="Machines, switches, routers, servers: drag them in and wire them up.">Máquinas, switches, routers e servidores: arrastas e ligas.</span></li>
+              <li><b class="n">02</b><b data-en="Break">Parte</b><span data-en="Attack it, misconfigure it. Save points let you go back in time.">Ataca, desconfigura. Os pontos guardados deixam voltar atrás.</span></li>
+              <li><b class="n">03</b><b data-en="Learn">Aprende</b><span data-en="Labs with a Check button tell you when you got it right.">Labs com um botão Verificar dizem-te quando acertaste.</span></li>
+            </ol>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- ============ 06. EDUCATION + 07. PRINCIPLES ============ -->
-    <section class="section" id="background">
-      <div class="container bg-grid">
-        <div>
-          <p class="section-label"><span>06.</span> Education</p>
-          <h2 class="section-title">Background.</h2>
+      <!-- Mimic -->
+      <div class="panel theme-mimic" role="tabpanel" id="p-mimic" aria-labelledby="tab-mimic" hidden>
+        <div class="panel-id">
+          <img class="panel-logo" src="assets/projects/mimic-logo.gif" alt="" width="110" height="110" />
+          <h3 class="pname" style="letter-spacing:.12em">MIMIC</h3>
+          <p class="tag">On stage, everyone thinks they’re the star. But the only thing they are, is the show.</p>
+          <p class="desc" data-en="A honeypot. Attackers think they found a real server; everything they type is recorded.">Um honeypot. Quem ataca julga que encontrou um servidor verdadeiro; tudo o que escreve fica gravado.</p>
+          <dl class="facts">
+            <dt class="mono">stack</dt><dd>Python 3.11</dd>
+            <dt class="mono" data-en="runs on">corre em</dt><dd data-en="Windows and Linux">Windows e Linux</dd>
+            <dt class="mono" data-en="logs">registos</dt><dd data-en="JSON, per session">JSON, por sessão</dd>
+          </dl>
+          <a class="repo-link" href="https://github.com/0xthearchitect/Mimic" target="_blank" rel="noopener"><span data-en="See it on GitHub">Ver no GitHub</span> ↗</a>
+        </div>
+        <div class="panel-how">
+          <div class="mimic-shots">
+            <figure class="shot a" style="aspect-ratio:1207/831"><img src="assets/projects/mimic-config.png" alt="Configurador do Mimic: identidade, serviços e opções" data-en-alt="Mimic configurator: identity, services and options" width="1207" height="831" loading="lazy" /></figure>
+            <figure class="shot b" style="aspect-ratio:1202/832"><img src="assets/projects/mimic-show.png" alt="Mimic a correr: THE SHOW IS ON, atividade em direto" data-en-alt="Mimic running: THE SHOW IS ON, live activity" width="1202" height="832" loading="lazy" /></figure>
+          </div>
+          <div class="how">
+            <span class="mono" data-en="how it works">como funciona</span>
+            <ol>
+              <li><b class="n">01</b><b data-en="Wear a mask">Escolhe a máscara</b><span data-en="Pick the services to fake and their banners, in a visual configurator.">Os serviços a fingir e os banners, num configurador visual.</span></li>
+              <li><b class="n">02</b><b data-en="Play the part">Faz o papel</b><span data-en="Fake shell, fake files, human-like delays. It feels real.">Shell falsa, ficheiros falsos, atrasos humanos. Parece real.</span></li>
+              <li><b class="n">03</b><b data-en="Keep the record">Guarda tudo</b><span data-en="Every credential and command lands in a JSON log.">Cada credencial e comando fica num registo JSON.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
 
-          <ul class="edu-list">
-            <li class="edu">
-              <svg class="icon icon-lg"><use href="#i-hat"/></svg>
-              <div>
-                <p class="edu-title">CST, Cybersecurity</p>
-                <p class="edu-meta">ISTEC - Instituto Superior de Tecnologias Avançadas do Porto</p>
-                <p class="edu-meta">Oct 2023 – Jul 2026</p>
-              </div>
-            </li>
-            <li class="edu">
-              <svg class="icon icon-lg"><use href="#i-cert"/></svg>
-              <div>
-                <p class="edu-title">Gestão e Programação de Sistemas Informáticos</p>
-                <p class="edu-meta">ESAOF</p>
-                <p class="edu-meta">Sep 2021 – Jul 2023</p>
-              </div>
-            </li>
-          </ul>
+      <!-- Pocketme -->
+      <div class="panel theme-pocketme" role="tabpanel" id="p-pocketme" aria-labelledby="tab-pocketme" hidden>
+        <div class="panel-id">
+          <img class="panel-logo" src="assets/projects/pocketme-logo.png" alt="" width="80" height="80" />
+          <h3 class="pname mono">pocket<span style="color:var(--accent)">me</span></h3>
+          <p class="tag" data-en="Your own private workspace, running on your own hardware.">O teu espaço de trabalho privado, no teu próprio hardware.</p>
+          <p class="desc" data-en="Chat, files and self-hosted apps in a small tray widget. No subscriptions, nobody else’s server.">Chat, ficheiros e apps self-hosted num pequeno widget. Sem subscrições, sem o servidor de outra pessoa.</p>
+          <dl class="facts">
+            <dt class="mono">stack</dt><dd>TypeScript · Tauri</dd>
+            <dt class="mono" data-en="runs on">corre em</dt><dd>Windows, macOS, Linux</dd>
+            <dt class="mono" data-en="licence">licença</dt><dd>MIT, open core</dd>
+          </dl>
+          <a class="repo-link" href="https://github.com/0xthearchitect/Pocketme" target="_blank" rel="noopener"><span data-en="See it on GitHub">Ver no GitHub</span> ↗</a>
+        </div>
+        <div class="panel-how">
+          <figure class="shot" style="aspect-ratio:1200/713"><img src="assets/projects/pocketme.png" alt="Loja de apps do Pocketme" data-en-alt="Pocketme app store" width="1200" height="713" loading="lazy" /></figure>
+          <div class="how">
+            <span class="mono" data-en="how it works">como funciona</span>
+            <ol>
+              <li><b class="n">01</b><b data-en="Install">Instala</b><span data-en="One server on your own machine; the team finds it by name on the LAN.">Um servidor na tua máquina; a equipa encontra-o pelo nome na rede.</span></li>
+              <li><b class="n">02</b><b data-en="Work together">Trabalha em equipa</b><span data-en="Realtime chat with channels, plus a shared file hub.">Chat em tempo real com canais e ficheiros partilhados.</span></li>
+              <li><b class="n">03</b><b data-en="Add apps">Junta apps</b><span data-en="Forgejo, Jellyfin, Vaultwarden… each one a click, each in its container.">Forgejo, Jellyfin, Vaultwarden… um clique cada, cada uma no seu contentor.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
 
-          <div class="principles">
-            <p class="section-label"><span>07.</span> Principles</p>
-            <h3 class="section-title section-title--sm">How I work.</h3>
-            <ul class="principle-list">
-              <li><svg class="icon"><use href="#i-check"/></svg> Build with intent.</li>
-              <li><svg class="icon"><use href="#i-search"/></svg> Understand the system.</li>
-              <li><svg class="icon"><use href="#i-hammer"/></svg> Break what you build.</li>
-              <li><svg class="icon"><use href="#i-file"/></svg> Document everything.</li>
-              <li><svg class="icon"><use href="#i-book"/></svg> Keep learning.</li>
+      <!-- CaraDBela -->
+      <div class="panel theme-caradbela" role="tabpanel" id="p-caradbela" aria-labelledby="tab-caradbela" hidden>
+        <div class="panel-id">
+          <img class="panel-logo wide" src="assets/projects/caradbela-logo.svg" alt="CaraDBela" width="282" height="72" />
+          <p class="tag" data-en="Your IoT, beautifully.">A tua IoT de forma bela.</p>
+          <p class="desc" data-en="Watches the smart devices on your network, spots suspicious access and explains it in plain words. Each device is a tile; the face shows how the network is doing.">Vigia os dispositivos inteligentes da rede, deteta acessos suspeitos e explica-os em português claro. Cada dispositivo é um azulejo; a cara mostra como está a rede.</p>
+          <dl class="facts">
+            <dt class="mono">stack</dt><dd>Node.js · Express · MongoDB</dd>
+            <dt class="mono">firmware</dt><dd>ESP32</dd>
+            <dt class="mono" data-en="team">equipa</dt><dd data-en="team project">projeto de equipa</dd>
+          </dl>
+          <a class="repo-link" href="https://github.com/Reinvicta-Tech/caraDBela" target="_blank" rel="noopener"><span data-en="See it on GitHub">Ver no GitHub</span> ↗</a>
+        </div>
+        <div class="panel-how">
+          <figure class="shot light" style="aspect-ratio:1440/960"><img src="assets/projects/caradbela.png" alt="A Casa da CaraDBela: cada dispositivo é um azulejo" data-en-alt="The CaraDBela house: each device is a tile" loading="lazy" /></figure>
+          <div class="how">
+            <span class="mono" data-en="how it works">como funciona</span>
+            <ol>
+              <li><b class="n">01</b><b data-en="Devices report">Os dispositivos contam</b><span data-en="Locks, cameras and sensors send their access events.">Fechaduras, câmaras e sensores enviam os acessos.</span></li>
+              <li><b class="n">02</b><b data-en="Rules spot patterns">As regras reconhecem</b><span data-en="Repeated failures, access from outside, after hours, unknown devices.">Falhas repetidas, acessos de fora, fora de horas, equipamentos novos.</span></li>
+              <li><b class="n">03</b><b data-en="The face warns you">A cara avisa</b><span data-en="Calm, alert or distressed, with the reason in plain words.">Calma, atenta ou aflita, com o motivo explicado.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- C.A.L.M.A. -->
+      <div class="panel theme-calma" role="tabpanel" id="p-calma" aria-labelledby="tab-calma" hidden>
+        <div class="panel-id">
+          <img class="panel-logo wide" src="assets/projects/calma-logo.png" alt="" width="246" height="70" />
+          <h3 class="pname">C.A.L.M.A.</h3>
+          <p class="tag" data-en="The attachment nobody should open.">O anexo que ninguém devia abrir.</p>
+          <p class="desc" data-en="Reads the attachments that reach Gmail, scores the risk and labels the message before anyone clicks. Built with 0xadamastor.">Lê os anexos que chegam ao Gmail, calcula o risco e etiqueta a mensagem antes de alguém clicar. Feito com 0xadamastor.</p>
+          <dl class="facts">
+            <dt class="mono" data-en="analyses">analisa</dt><dd data-en="Executables and PDF">Executáveis e PDF</dd>
+            <dt class="mono" data-en="connects to">liga a</dt><dd data-en="Gmail and VirusTotal">Gmail e VirusTotal</dd>
+            <dt class="mono" data-en="licence">licença</dt><dd>MIT</dd>
+          </dl>
+          <a class="repo-link" href="https://github.com/0xadamastor/C.A.L.M.A." target="_blank" rel="noopener"><span data-en="See it on GitHub">Ver no GitHub</span> ↗</a>
+        </div>
+        <div class="panel-how">
+          <div class="calma-card">
+            <div><span class="mono" data-en="attachment received">anexo recebido</span><b>fatura_0447.pdf.exe</b></div>
+            <ul>
+              <li style="--ink:#1d7148;--from:0%;--w:50%"><b data-en="Clean">Limpo</b><span class="bar"><i></i></span><span class="mono">0–49</span></li>
+              <li style="--ink:#9a5a00;--from:50%;--w:25%"><b data-en="Suspicious">Suspeito</b><span class="bar"><i></i></span><span class="mono">50–74</span></li>
+              <li style="--ink:#9f1f18;--from:75%;--w:25%"><b data-en="Infected">Infetado</b><span class="bar"><i></i></span><span class="mono">75–100</span></li>
             </ul>
           </div>
+          <div class="how">
+            <span class="mono" data-en="how it works">como funciona</span>
+            <ol>
+              <li><b class="n">01</b><b data-en="An attachment arrives">Chega um anexo</b><span data-en="C.A.L.M.A. picks up new mail with executables or PDFs.">O C.A.L.M.A. apanha o correio novo com executáveis ou PDF.</span></li>
+              <li><b class="n">02</b><b data-en="The model scores it">O modelo avalia</b><span data-en="Structure, obfuscation and known signs give a risk from 0 to 100.">Estrutura, ofuscação e sinais conhecidos dão um risco de 0 a 100.</span></li>
+              <li><b class="n">03</b><b data-en="The mail gets a label">O email é etiquetado</b><span data-en="Clean, Suspicious or Infected, before anyone opens it.">Limpo, Suspeito ou Infetado, antes de alguém o abrir.</span></li>
+            </ol>
+          </div>
         </div>
-
-        <!-- Learning illustration from Penpot -->
-        <figure class="illustration illustration--bg divider-left">
-          <img src="assets/illustrations/background.webp" data-src-dark="assets/illustrations/background.webp" data-src-light="assets/illustrations/background-light.webp" width="1024" height="1536" alt="" loading="lazy" decoding="async" onload="this.parentElement.classList.remove('is-empty')" onerror="this.parentElement.classList.add('is-empty')" />
-          <figcaption class="illustration-hint">background.webp</figcaption>
-        </figure>
       </div>
     </section>
 
-    <!-- ============ 08. CONTACT ============ -->
-    <section class="section" id="contact">
-      <div class="container contact-grid">
-        <div>
-          <p class="section-label"><span>08.</span> Contact</p>
-          <h2 class="section-title">Let's connect.</h2>
-          <p class="section-intro">Whether it's a job opportunity, a collaboration or just a tech chat — feel free to reach out.</p>
-
-          <ul class="contact-list">
-            <li><svg class="icon"><use href="#i-mail"/></svg><a href="mailto:samu.rocha10@gmail.com">samu.rocha10@gmail.com</a></li>
-            <li><svg class="icon"><use href="#i-linkedin"/></svg><a href="https://linkedin.com/in/0xthearchitect" target="_blank" rel="noopener">linkedin.com/in/0xthearchitect</a></li>
-            <li><svg class="icon"><use href="#i-github"/></svg><a href="https://github.com/0xthearchitect" target="_blank" rel="noopener">github.com/0xthearchitect</a></li>
-          </ul>
-
-          <a href="mailto:samu.rocha10@gmail.com" class="btn">Send me an email <svg class="icon"><use href="#i-arrow"/></svg></a>
-        </div>
-
-        <!-- Contact illustration from Penpot -->
-        <figure class="illustration illustration--contact">
-          <img src="assets/illustrations/contact.webp" data-src-dark="assets/illustrations/contact.webp" data-src-light="assets/illustrations/contact-light.webp" width="1254" height="1254" alt="" loading="lazy" decoding="async" onload="this.parentElement.classList.remove('is-empty')" onerror="this.parentElement.classList.add('is-empty')" />
-          <figcaption class="illustration-hint">contact.webp</figcaption>
-        </figure>
+    <!-- ============ 03 FERRAMENTAS ============ -->
+    <section class="section wrap" id="ferramentas">
+      <span class="idx mono">03</span>
+      <div class="section-head">
+        <h2 class="h2" data-en="Tools">Ferramentas</h2>
+        <p class="lead" data-en="The keys I use every day. Each one has two legends: what I build with, and what I break with. Turn on Break, like caps lock, and the keyboard changes.">As teclas que uso todos os dias. Cada uma tem duas legendas: aquilo com que construo e aquilo com que parto. Liga o Quebrar, como o caps lock, e o teclado muda.</p>
       </div>
+
+      <div class="kbd" data-mode="build">
+        <div class="screen mono" aria-live="polite">
+          <span class="prompt">architect@build:~$</span>
+          <span class="typed"></span><span class="cur" aria-hidden="true"></span>
+          <span class="hint" data-en="press a key">carrega numa tecla</span>
+        </div>
+        <div class="board">
+          <div class="krow" style="--lw:210px">
+            <span class="key lbl"><span class="alt mono">05</span><span class="main" data-en="Application">Aplicação</span></span>
+            <button type="button" class="key" data-b="TypeScript" data-x="Burp Suite"></button>
+            <button type="button" class="key" data-b="JavaScript" data-x="Segurança web" data-x-en="Web security"></button>
+            <button type="button" class="key" data-b="PHP" data-x=""></button>
+            <button type="button" class="key" data-b="C#" data-x=""></button>
+            <button type="button" class="key" data-b="Tauri" data-x=""></button>
+          </div>
+          <div class="krow" style="--lw:250px">
+            <span class="key lbl"><span class="alt mono">04</span><span class="main" data-en="Data">Dados</span></span>
+            <button type="button" class="key" data-b="Python" data-x="Criptografia" data-x-en="Cryptography"></button>
+            <button type="button" class="key" data-b="SQL" data-x=""></button>
+            <button type="button" class="key" data-b="Machine Learning" data-x=""></button>
+            <button type="button" class="key" data-b="" data-x=""></button>
+          </div>
+          <div class="krow" style="--lw:290px">
+            <span class="key lbl"><span class="alt mono">03</span><span class="main" data-en="Network">Rede</span></span>
+            <button type="button" class="key" data-b="Docker" data-x="Nmap"></button>
+            <button type="button" class="key" data-b="Kubernetes" data-x="Wireshark"></button>
+            <button type="button" class="key" data-b="" data-x="Metasploit"></button>
+            <button type="button" class="key" data-b="" data-x="Segurança de redes" data-x-en="Network security"></button>
+          </div>
+          <div class="krow" style="--lw:250px">
+            <span class="key lbl"><span class="alt mono">02</span><span class="main" data-en="System">Sistema</span></span>
+            <button type="button" class="key" data-b="Linux" data-x="Forense" data-x-en="Forensics"></button>
+            <button type="button" class="key" data-b="Windows" data-x="Análise de malware" data-x-en="Malware analysis"></button>
+            <button type="button" class="key" data-b="Bash" data-x=""></button>
+            <button type="button" class="key" data-b="Git" data-x=""></button>
+          </div>
+          <div class="krow" style="--lw:210px">
+            <span class="key lbl"><span class="alt mono">01</span><span class="main">Metal</span></span>
+            <button type="button" class="key" data-b="C" data-x="Engenharia reversa" data-x-en="Reverse engineering"></button>
+            <button type="button" class="key" data-b="C++" data-x=""></button>
+            <button type="button" class="key" data-b="Rust" data-x=""></button>
+            <button type="button" class="key" data-b="" data-x=""></button>
+            <button type="button" class="key" data-b="" data-x=""></button>
+          </div>
+          <div class="krow mods">
+            <button type="button" class="key mod" data-mode-set="build" aria-pressed="true"><span class="alt mono">⇧</span><span class="main" data-en="Build">Construir</span></button>
+            <span class="key space" aria-hidden="true"><span class="mono">0xthearchitect</span></span>
+            <button type="button" class="key mod" data-mode-set="break" aria-pressed="false"><span class="led"></span><span class="alt mono">caps lock</span><span class="main" data-en="Break">Quebrar</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 PRINCÍPIOS ============ -->
+    <section class="section wrap" id="principios">
+      <span class="idx mono">04</span>
+      <h2 class="h2" data-en="How I work">Como trabalho</h2>
+      <ol class="principles">
+        <li class="pr p1"><span class="idx mono">01</span><span class="ptext"><span class="u" data-en="Build with intent.">Construir com intenção.</span><img src="assets/brand/triangle.jpg" alt="" width="56" height="56" /></span></li>
+        <li class="pr p2"><span class="idx mono">02</span><span class="ptext" data-en="Understand the system.">Perceber o sistema.</span></li>
+        <li class="pr p3"><span class="idx mono">03</span><span class="ptext split"><span class="top" aria-hidden="true" data-en="Break what you build.">Partir o que construo.</span><span class="bot" data-en="Break what you build.">Partir o que construo.</span></span></li>
+        <li class="pr p4"><span class="idx mono">04</span><span class="ptext"><span data-en="Document everything.">Documentar tudo.</span> <span class="note mono" data-en="// yes, this too">// sim, isto também</span></span></li>
+        <li class="pr p5"><span class="idx mono">05</span><span class="ptext"><span data-en="Keep learning">Nunca parar de aprender</span><span class="more5" data-en="… and learning">… e aprender</span><span class="cur" aria-hidden="true"></span></span></li>
+      </ol>
+    </section>
+
+    <!-- ============ 05 CONTACTO ============ -->
+    <section class="section wrap contact" id="contacto">
+      <div class="contact-text">
+        <span class="idx mono">05</span>
+        <h2 class="h2 big" data-en="Let's talk.">Vamos falar.</h2>
+        <p class="lead" data-en="Whether it's an opportunity, a collaboration or just a chat about security: drop me a line.">Seja uma oportunidade, uma colaboração ou só uma conversa sobre segurança: escreve-me.</p>
+        <div class="actions">
+          <a class="btn btn-main" href="mailto:samu.rocha10@gmail.com" data-en="Send an email">Enviar email</a>
+          <a class="btn btn-line" href="https://linkedin.com/in/0xthearchitect" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-line" href="https://github.com/0xthearchitect" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <img class="contact-mark" src="assets/brand/triangle.jpg" alt="" width="436" height="436" loading="lazy" />
     </section>
   </main>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>
-        <a href="#home" class="logo logo--sm" aria-label="Back to top">
-          <img src="assets/illustrations/logo.png" alt="The Architect" class="logo-img" width="2048" height="592" loading="lazy" decoding="async" onerror="this.remove()" />
-        </a>
-        <p class="footer-tagline">Built with curiosity. Secured with paranoia.</p>
-      </div>
-      <div class="footer-social">
-        <a href="https://github.com/0xthearchitect" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon"><use href="#i-github"/></svg></a>
-        <a href="https://linkedin.com/in/0xthearchitect" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a>
-        <a href="mailto:samu.rocha10@gmail.com" aria-label="Email"><svg class="icon"><use href="#i-mail"/></svg></a>
-      </div>
-      <p class="footer-copy">© <span id="year">2026</span> The Architect</p>
-    </div>
+  <footer class="site-footer wrap mono">
+    <span data-en="Built with curiosity. Secured with paranoia.">Feito com curiosidade. Protegido com paranoia.</span>
+    <span id="github-status"></span>
+    <span>© 2026 The Architect</span>
   </footer>
 
   <script src="js/main.js"></script>
-  <script id="github-snapshot" type="application/json">{"username":"0xthearchitect","updated_at":"2026-11-26T08:28:41.841Z","public_repos":21,"followers":7,"contributions":717,"repositories":[{"name":"WhatIf","description":"**WhatIf?** is a comprehensive automated reconnaissance and vulnerability scanning tool designed for security professionals, penetration testers, and ethical hackers.","stargazers_count":1},{"name":"NataBase","description":"In NataBase your Nata is Based.","stargazers_count":2},{"name":"Anvil","description":"Anvil is a cross-platform tool to automate the creation of binaries and scripts from Python projects. It can build standalone executables, inspect projects, manage assets, and in the future, reconstruct executables into readable source code (reverse build).","stargazers_count":0}]}</script>
+  <script id="github-snapshot" type="application/json">{"username":"0xthearchitect","updated_at":"2026-11-26T12:25:05.858Z","public_repos":21,"followers":7,"contributions":717,"repositories":[{"full_name":"0xthearchitect/beatbox","name":"beatbox","description":"🧊Disposable environments on your own computer","stargazers_count":12},{"full_name":"0xthearchitect/Mimic","name":"Mimic","description":"On stage, everyone thinks they're the star. But the only thing they are, is the show.","stargazers_count":3},{"full_name":"0xthearchitect/Pocketme","name":"Pocketme","description":"Pocketme — Personal self-hosted","stargazers_count":1},{"full_name":"Reinvicta-Tech/caraDBela","name":"caraDBela","description":"A tua IoT de forma bela: vigia os dispositivos da tua rede, deteta acessos suspeitos e avisa-te.","stargazers_count":0},{"full_name":"0xadamastor/C.A.L.M.A.","name":"C.A.L.M.A.","description":"Containerized Automated Lazy Mail Anti-nasties","stargazers_count":2}]}</script>
   <script src="js/github.js"></script>
 </body>
 </html>

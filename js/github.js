@@ -5,63 +5,44 @@
   try { data = JSON.parse(document.getElementById('github-snapshot').textContent); }
   catch (error) { data = {}; }
   var username = data.username || '0xthearchitect';
-  var featuredRepositories = (data.repositories || []).map(function (repo) { return repo.name; });
-  var list = document.getElementById('github-repos');
+  // The projects on the page, as "owner/name"; star counts are matched case-insensitively.
+  var featured = Array.prototype.map.call(document.querySelectorAll('[data-repo]'), function (el) { return el.dataset.repo; });
   var status = document.getElementById('github-status');
-  var snapshotDate;
-  var snapshotTime = 0;
+  var syncedAt = 0;
+  var state = 'none'; // none | saved | live | stale
 
+  var shown = {};
   function count(id, value) {
     if (Number.isInteger(value) && value >= 0) {
-      document.getElementById(id).textContent = value.toLocaleString('en-US');
+      shown[id] = value;
+      document.getElementById(id).textContent = value.toLocaleString(document.documentElement.lang === 'en' ? 'en-GB' : 'pt-PT');
     }
   }
 
-  function icon(name, className) {
-    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', className);
-    svg.setAttribute('aria-hidden', 'true');
-    var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    use.setAttribute('href', '#i-' + name);
-    svg.appendChild(use);
-    return svg;
-  }
-
-  function repositories(repos) {
-    list.replaceChildren();
-    repos.slice(0, 3).forEach(function (repo) {
-      var row = document.createElement('li');
-      row.className = 'repo';
-      row.appendChild(icon('github', 'icon repo-icon'));
-      var info = document.createElement('div');
-      info.className = 'repo-info';
-      var link = document.createElement('a');
-      // Build the URL from the known account and an encoded repository name.
-      link.href = 'https://github.com/' + username + '/' + encodeURIComponent(repo.name);
-      link.className = 'repo-name';
-      link.target = '_blank';
-      link.rel = 'noopener';
-      link.textContent = repo.name;
-      var description = document.createElement('p');
-      description.className = 'repo-desc';
-      description.textContent = repo.description || 'No description provided.';
-      info.append(link, description);
-      row.appendChild(info);
-      var stars = document.createElement('span');
-      stars.className = 'repo-stars';
-      stars.setAttribute('aria-label', repo.stargazers_count + ' stars');
-      stars.append(icon('star', 'icon'), document.createTextNode(' ' + repo.stargazers_count));
-      row.appendChild(stars);
-      list.appendChild(row);
+  function stars(repos) {
+    var byName = {};
+    repos.forEach(function (repo) {
+      if (repo && repo.full_name && Number.isInteger(repo.stargazers_count)) byName[repo.full_name.toLowerCase()] = repo.stargazers_count;
     });
-    if (!repos.length) message('No featured repositories available.');
+    document.querySelectorAll('[data-repo]').forEach(function (el) {
+      var n = byName[el.dataset.repo.toLowerCase()];
+      if (n === undefined) return;
+      el.textContent = '★ ' + n;
+      el.hidden = n === 0; // a project with no stars simply shows none
+      var en = document.documentElement.lang === 'en';
+      el.setAttribute('aria-label', n + (en ? (n === 1 ? ' star' : ' stars') + ' on GitHub' : (n === 1 ? ' estrela' : ' estrelas') + ' no GitHub'));
+    });
   }
 
-  function message(text) {
-    var item = document.createElement('li');
-    item.className = 'repo-message';
-    item.textContent = text;
-    list.replaceChildren(item);
+  function showStatus() {
+    var en = document.documentElement.lang === 'en';
+    var when = syncedAt ? new Date(syncedAt).toLocaleDateString(en ? 'en-GB' : 'pt-PT', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+    status.textContent = {
+      none: '',
+      saved: en ? 'GitHub data from ' + when : 'Dados do GitHub de ' + when,
+      live: en ? 'GitHub data live' : 'Dados do GitHub em direto',
+      stale: en ? 'GitHub data from ' + when + ' (live refresh unavailable)' : 'Dados do GitHub de ' + when + ' (sem atualização em direto)'
+    }[state];
   }
 
   async function json(url) {
@@ -76,54 +57,49 @@
     }
   }
 
+  function applySnapshot(snapshot) {
+    count('github-repositories', snapshot.public_repos);
+    count('github-contributions', snapshot.contributions);
+    if (Array.isArray(snapshot.repositories)) stars(snapshot.repositories);
+    syncedAt = Date.parse(snapshot.updated_at) || syncedAt;
+  }
+
   async function load() {
-    var hasSnapshot = false;
     // Embedded data renders synchronously, including when opened via file://.
-    try {
-      if (data.username !== username || !Array.isArray(data.repositories)) throw new Error('Invalid snapshot');
-      count('github-repositories', data.public_repos);
-      count('github-followers', data.followers);
-      count('github-contributions', data.contributions);
-      repositories(data.repositories.filter(function (repo) { return featuredRepositories.includes(repo.name); }));
-      snapshotDate = new Date(data.updated_at).toLocaleString('en-GB');
-      snapshotTime = Date.parse(data.updated_at) || 0;
-      hasSnapshot = true;
-      status.textContent = 'GitHub data synced: ' + snapshotDate + '.';
-    } catch (error) {
-      status.textContent = 'Saved GitHub data unavailable; trying a live refresh.';
+    if (data.username === username && Array.isArray(data.repositories)) {
+      applySnapshot(data);
+      state = 'saved';
     }
+    showStatus();
 
     var results = await Promise.allSettled([
-      json('https://api.github.com/users/' + username).then(function (profile) {
-        count('github-repositories', profile.public_repos);
-        count('github-followers', profile.followers);
-        return profile;
-      }),
-      Promise.all(featuredRepositories.map(function (name) {
-        return json('https://api.github.com/repos/' + username + '/' + encodeURIComponent(name));
-      })).then(function (repos) { repositories(repos); return repos; }),
+      json('https://api.github.com/users/' + username),
+      Promise.all(featured.map(function (full) {
+        var parts = full.split('/');
+        return json('https://api.github.com/repos/' + encodeURIComponent(parts[0]) + '/' + encodeURIComponent(parts[1]));
+      })),
       json('https://raw.githubusercontent.com/' + username + '/Profissional-Portfolio/main/data/github.json')
     ]);
     var profileOK = results[0].status === 'fulfilled';
-    var reposOK = results[1].status === 'fulfilled' && Array.isArray(results[1].value);
-    if (profileOK) {
-      count('github-repositories', results[0].value.public_repos);
-      count('github-followers', results[0].value.followers);
-    }
-    if (reposOK) repositories(results[1].value);
+    var reposOK = results[1].status === 'fulfilled';
+    if (profileOK) count('github-repositories', results[0].value.public_repos);
+    if (reposOK) stars(results[1].value);
+    // Contributions are not in the API: take them from the newest published snapshot.
     if (results[2].status === 'fulfilled') {
       var latest = results[2].value;
-      if (latest.username === username && Number.isInteger(latest.contributions) && latest.contributions >= 0 && Date.parse(latest.updated_at) > snapshotTime) {
+      if (latest.username === username && Number.isInteger(latest.contributions) && latest.contributions >= 0 && Date.parse(latest.updated_at) > syncedAt) {
         count('github-contributions', latest.contributions);
-        snapshotDate = new Date(latest.updated_at).toLocaleString('en-GB');
-        hasSnapshot = true;
+        syncedAt = Date.parse(latest.updated_at);
+        if (state === 'none') state = 'saved';
       }
     }
-    if (!reposOK && !hasSnapshot) message('Repositories could not be loaded. View them on GitHub using the link above.');
-    status.textContent = profileOK && reposOK
-      ? (hasSnapshot ? 'GitHub data loaded. Contributions synced: ' + snapshotDate + '.' : 'GitHub data loaded. Contribution count temporarily unavailable.')
-      : (hasSnapshot ? 'Showing saved GitHub data from ' + snapshotDate + '; live refresh unavailable.' : 'Some GitHub data could not be loaded. Please try again later.');
+    state = profileOK && reposOK ? 'live' : (syncedAt ? 'stale' : 'none');
+    showStatus();
   }
 
+  document.addEventListener('langchange', function () {
+    Object.keys(shown).forEach(function (id) { count(id, shown[id]); });
+    showStatus();
+  });
   load();
 })();

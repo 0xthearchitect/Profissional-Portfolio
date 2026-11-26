@@ -3,109 +3,105 @@
 
   var root = document.documentElement;
 
-  function syncIllustrations() {
-    var attribute = root.getAttribute('data-theme') === 'light' ? 'data-src-light' : 'data-src-dark';
-    document.querySelectorAll('img[data-src-dark]').forEach(function (img) {
-      var source = img.getAttribute(attribute);
-      if (source && img.getAttribute('src') !== source) img.src = source;
+  /* ---------- Língua (PT por omissão, EN em data-en*) ---------- */
+  // The Portuguese text lives in the HTML; English comes from data-en, data-en-alt and data-en-label.
+  var TEXT = [['data-en', null], ['data-en-alt', 'alt'], ['data-en-label', 'aria-label']];
+  var META = {
+    pt: { title: 'The Architect — Cibersegurança e software', desc: 'Cibersegurança e software: construo sistemas e testo-os até partirem.' },
+    en: { title: 'The Architect — Cybersecurity & software', desc: 'Cybersecurity and software: I build systems and test them until they break.' }
+  };
+
+  function setLang(lang) {
+    TEXT.forEach(function (pair) {
+      var attr = pair[0], target = pair[1];
+      document.querySelectorAll('[' + attr + ']').forEach(function (el) {
+        var store = attr + '-pt';
+        if (!el.hasAttribute(store)) el.setAttribute(store, target ? (el.getAttribute(target) || '') : el.textContent);
+        var value = lang === 'en' ? el.getAttribute(attr) : el.getAttribute(store);
+        if (target) el.setAttribute(target, value); else el.textContent = value;
+      });
+    });
+    root.lang = lang;
+    document.title = META[lang].title;
+    document.querySelector('meta[name="description"]').setAttribute('content', META[lang].desc);
+    document.querySelectorAll('.lang').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === lang)); });
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+    renderKeys();
+    document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
+  }
+  document.querySelectorAll('.lang').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.dataset.lang); });
+  });
+
+  /* ---------- Projetos: separadores ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.ptab'));
+  function select(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+  }
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { select(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var to = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (to === undefined) return;
+      e.preventDefault();
+      select(tabs[(to + tabs.length) % tabs.length], true);
+    });
+  });
+
+  /* ---------- Ferramentas: o teclado ---------- */
+  var kbd = document.querySelector('.kbd');
+  var typed = [];
+
+  function legend(key, which) {
+    if (which === 'b') return key.dataset.b;
+    return (root.lang === 'en' && key.dataset.xEn) || key.dataset.x;
+  }
+
+  function renderKeys() {
+    if (!kbd) return;
+    var breaking = kbd.dataset.mode === 'break';
+    kbd.querySelectorAll('.key[data-b]').forEach(function (key) {
+      var main = legend(key, breaking ? 'x' : 'b');
+      var alt = legend(key, breaking ? 'b' : 'x');
+      key.replaceChildren();
+      var a = document.createElement('span'); a.className = 'alt mono'; a.textContent = alt;
+      var m = document.createElement('span'); m.className = 'main'; m.textContent = main;
+      key.append(a, m);
+      key.classList.toggle('blank', !main);
+      key.setAttribute('aria-label', main || '—');
+      key.disabled = !main;
+    });
+    kbd.querySelector('.prompt').textContent = breaking ? 'root@break:~#' : 'architect@build:~$';
+    kbd.querySelector('.typed').textContent = typed.join(' ');
+    kbd.querySelectorAll('[data-mode-set]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.modeSet === kbd.dataset.mode));
     });
   }
 
-  syncIllustrations();
-
-  /* ---------- Theme toggle ---------- */
-  var themeToggle = document.getElementById('themeToggle');
-  themeToggle.addEventListener('click', function () {
-    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    root.setAttribute('data-theme', next);
-    syncIllustrations();
-    try { localStorage.setItem('theme', next); } catch (e) {}
-  });
-
-  /* ---------- Mobile menu ---------- */
-  var nav = document.getElementById('nav');
-  var menuBtn = document.getElementById('menuBtn');
-
-  function setMenu(open) {
-    nav.classList.toggle('open', open);
-    menuBtn.setAttribute('aria-expanded', String(open));
-  }
-  menuBtn.addEventListener('click', function () {
-    setMenu(!nav.classList.contains('open'));
-  });
-  nav.addEventListener('click', function (e) {
-    if (e.target.closest('a')) setMenu(false);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') setMenu(false);
-  });
-
-  /* ---------- Header border on scroll ---------- */
-  var header = document.querySelector('.site-header');
-  function onScroll() { header.classList.toggle('scrolled', window.scrollY > 8); }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  /* ---------- Illustration slots ----------
-     Catch images that failed before this script ran (onerror covers the rest). */
-  document.querySelectorAll('.illustration img').forEach(function (img) {
-    if (img.complete && img.naturalWidth === 0) img.parentElement.classList.add('is-empty');
-  });
-
-  if (!('IntersectionObserver' in window)) return;
-
-  /* ---------- Active nav link ---------- */
-  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
-  var navTargets = {};
-  links.forEach(function (l) { navTargets[l.getAttribute('href').slice(1)] = l; });
-
-  var spy = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      var link = navTargets[entry.target.id];
-      // Sections without their own nav link (about, background) keep the previous one
-      if (!link) return;
-      links.forEach(function (l) { l.classList.toggle('active', l === link); });
-    });
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  document.querySelectorAll('main section[id]').forEach(function (s) { spy.observe(s); });
-
-  /* ---------- Reveal on scroll ---------- */
-  var revealEls = document.querySelectorAll(
-    '.section-label, .section-title, .section-intro, .prose, .role-list, .timeline-item, ' +
-    '.project, .stats, .repo-list, .skill, .edu, .principles, .contact-list, .illustration:not(.illustration--hero)'
-  );
-  var revealer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        revealer.unobserve(entry.target);
+  if (kbd) {
+    kbd.addEventListener('click', function (e) {
+      var mode = e.target.closest('[data-mode-set]');
+      if (mode) {
+        kbd.dataset.mode = mode.dataset.modeSet;
+        typed = [];
+        renderKeys();
+        return;
       }
+      var key = e.target.closest('.key[data-b]');
+      if (!key || key.disabled) return;
+      var word = key.getAttribute('aria-label').toLowerCase().replace(/\s+/g, '-');
+      typed = typed.concat(word).slice(-5);
+      kbd.querySelector('.typed').textContent = typed.join(' ');
     });
-  }, { rootMargin: '0px 0px -8% 0px' });
-  revealEls.forEach(function (el) {
-    el.classList.add('reveal');
-    revealer.observe(el);
-  });
+  }
 
-  /* ---------- Count-up stats ---------- */
-  var counter = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      counter.unobserve(entry.target);
-      var el = entry.target;
-      var end = parseInt(el.getAttribute('data-count'), 10);
-      var start = performance.now();
-      var dur = 1100;
-      (function tick(now) {
-        var p = Math.min((now - start) / dur, 1);
-        el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
-        if (p < 1) requestAnimationFrame(tick);
-      })(start);
-    });
-  }, { threshold: 0.6 });
-  document.querySelectorAll('[data-count]').forEach(function (el) { counter.observe(el); });
-
-  var year = document.getElementById('year');
-  if (year) year.textContent = new Date().getFullYear();
+  var saved = 'pt';
+  try { saved = localStorage.getItem('lang') === 'en' ? 'en' : 'pt'; } catch (e) {}
+  if (saved === 'en') setLang('en'); else renderKeys();
 })();
