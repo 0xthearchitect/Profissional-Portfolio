@@ -101,6 +101,41 @@
     });
   }
 
+  /* O teclado a sério também manda: Caps Lock liga o Quebrar, Shift troca enquanto está carregado. */
+  if (kbd) {
+    var caps = false, shift = false;
+    var setMode = function () {
+      var mode = caps !== shift ? 'break' : 'build';
+      if (kbd.dataset.mode === mode) return;
+      kbd.dataset.mode = mode;
+      typed = [];
+      renderKeys();
+    };
+    var press = function (sel, on) {
+      var key = kbd.querySelector(sel);
+      if (key) key.classList.toggle('down', on);
+    };
+    var sync = function (e) {
+      if (typeof e.getModifierState !== 'function') return;
+      caps = e.getModifierState('CapsLock');
+      shift = e.shiftKey;
+      press('[data-mode-set="build"]', shift);
+      setMode();
+    };
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'CapsLock' || e.key === 'Shift') sync(e);
+    });
+    document.addEventListener('keyup', function (e) {
+      if (e.key === 'CapsLock' || e.key === 'Shift') sync(e);
+    });
+    // Clicking the on-screen keys still works: it sets the mode as if Caps Lock had been toggled.
+    kbd.addEventListener('click', function (e) {
+      var mode = e.target.closest('[data-mode-set]');
+      if (mode) caps = mode.dataset.modeSet === 'break';
+    });
+    window.addEventListener('blur', function () { shift = false; press('[data-mode-set="build"]', false); setMode(); });
+  }
+
   var saved = 'pt';
   try { saved = localStorage.getItem('lang') === 'en' ? 'en' : 'pt'; } catch (e) {}
   if (saved === 'en') setLang('en'); else renderKeys();
