@@ -157,6 +157,9 @@ details[open] .arrow { transform: rotate(180deg); }
 .typed { overflow: hidden; text-overflow: ellipsis; }
 .cur { display: inline-block; flex-shrink: 0; width: 12px; height: 24px; background: currentColor; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
+/* No text selection on the keyboard (Shift+click would select legends), and no focus ring after a mouse click */
+.board, .screen { -webkit-user-select: none; user-select: none; }
+.kbd.pointer .key:focus-visible { outline: none; }
 .board { padding: 28px; border: 3px solid var(--cream); border-radius: 22px; display: flex; flex-direction: column; gap: 16px; background: #0b0c0f; box-shadow: 8px 8px 0 #000, 12px 12px 0 var(--cream); transition: background .4s; }
 .krow { display: flex; gap: 12px; }
 .key { appearance: none; position: relative; flex: 1 1 0; min-width: 0; height: 86px; border-radius: 10px; padding: 10px 14px; text-align: left; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;

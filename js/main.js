@@ -133,6 +133,9 @@
       var mode = e.target.closest('[data-mode-set]');
       if (mode) caps = mode.dataset.modeSet === 'break';
     });
+    // Keyboard users keep the focus ring; it is hidden only while the mouse is being used.
+    kbd.addEventListener('pointerdown', function () { kbd.classList.add('pointer'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Tab') kbd.classList.remove('pointer'); });
     window.addEventListener('blur', function () { shift = false; press('[data-mode-set="build"]', false); setMode(); });
   }
 
