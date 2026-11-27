@@ -55,15 +55,17 @@ button { font: inherit; color: inherit; }
 .btn-line:hover { border-color: var(--cream); }
 
 /* ---------- Hero ---------- */
-.hero { min-height: calc(100vh - 92px); min-height: calc(100svh - 92px); display: grid; grid-template-columns: minmax(0, 820px) minmax(0, 1fr); grid-template-rows: 1fr auto; align-items: center; gap: 24px; padding-bottom: 48px; }
+.hero { min-height: calc(100vh - 92px); min-height: calc(100svh - 92px); display: grid; grid-template-columns: minmax(0, 820px) minmax(0, 1fr); align-items: center; gap: 24px; padding-bottom: 48px; }
 .hero-text { display: flex; flex-direction: column; gap: 36px; }
 .hero-title { margin: 0; line-height: 0; }
 .hero-title img { width: 100%; height: auto; margin: -5.4% 0 -6.3% -1.7%; }
 .hero-intro { margin: 0; max-width: 580px; font-size: clamp(19px, 1.6vw, 22px); color: var(--soft); }
 .hero-mark { justify-self: center; width: min(436px, 100%); height: auto; }
-.hero-facts { grid-column: 1 / -1; list-style: none; margin: 0; padding: 20px 0 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 12px 48px; font-size: 14px; color: var(--muted); }
-.hero-facts b { color: var(--cream); font-weight: 500; }
-.hero-facts .push { margin-left: auto; }
+.hero-where { margin: -20px 0 0; font-size: 14px; color: var(--muted); }
+/* GitHub numbers sit with the projects they measure */
+.gh-facts { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 40px; font-size: 14px; color: var(--muted); }
+.gh-facts b { color: var(--cream); font-weight: 500; }
+.gh-facts .push { margin-left: auto; }
 
 /* ---------- Sections ---------- */
 .section { padding-top: 120px; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 0; }
@@ -242,7 +244,7 @@ details[open] .arrow { transform: rotate(180deg); }
   body { font-size: 17px; }
   .nav a { display: none; }
   .section { padding-top: 88px; }
-  .hero-facts .push { margin-left: 0; }
+  .gh-facts .push { margin-left: 0; }
   .stats { gap: 24px; }
   .path details[open] { padding: 0 16px; }
   .path summary { grid-template-columns: minmax(0, 1fr) 28px; grid-template-areas: "yr arrow" "who who" "kind kind"; gap: 8px; padding: 20px 0; min-height: 0; }
