@@ -272,3 +272,17 @@ details[open] .arrow { transform: rotate(180deg); }
   .split .bot { position: static; clip-path: none; white-space: normal; }
   .note { display: none; }
 }
+
+/* ---------- Cursor: o triângulo ---------- */
+/* Only on devices with a real mouse; the native cursor stays everywhere else. */
+@media (hover: hover) and (pointer: fine) {
+  html.tri-cursor, html.tri-cursor * { cursor: none !important; }
+}
+.cursor { position: fixed; left: 0; top: 0; width: 37px; height: 37px; pointer-events: none; z-index: 1000;
+  /* difference: the black of the JPG vanishes, the white triangle inverts what is underneath,
+     so it reads on black and on the cream/light panels alike */
+  mix-blend-mode: difference; opacity: 0; transition: opacity .2s; will-change: transform; }
+.cursor img { display: block; width: 37px; height: 37px; transform-origin: 2.5px 20.5px; transition: transform .18s cubic-bezier(.3, 1.5, .5, 1); }
+.cursor.on { opacity: 1; }
+.cursor.link img { transform: scale(1.4); }
+.cursor.down img { transform: scale(.8); }

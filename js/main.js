@@ -157,6 +157,29 @@
     document.querySelectorAll('main section[id]').forEach(function (section) { spy.observe(section); });
   }
 
+  /* ---------- Cursor: o triângulo ---------- */
+  // The tip of the triangle (29, 242 in the 436px logo) is the hotspot: 2.5px, 20.5px at 37px.
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var cursor = document.createElement('div');
+    cursor.className = 'cursor';
+    cursor.setAttribute('aria-hidden', 'true');
+    cursor.innerHTML = '<img src="assets/brand/triangle.jpg" alt="" width="37" height="37">';
+    document.body.appendChild(cursor);
+    root.classList.add('tri-cursor');
+    var cx = 0, cy = 0, frame = 0;
+    var place = function () { frame = 0; cursor.style.transform = 'translate(' + (cx - 2.5) + 'px,' + (cy - 20.5) + 'px)'; };
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      cx = e.clientX; cy = e.clientY;
+      cursor.classList.add('on');
+      cursor.classList.toggle('link', !!e.target.closest('a, button:not(:disabled), summary, [role="tab"]'));
+      if (!frame) frame = requestAnimationFrame(place);
+    });
+    document.addEventListener('pointerdown', function () { cursor.classList.add('down'); });
+    document.addEventListener('pointerup', function () { cursor.classList.remove('down'); });
+    document.documentElement.addEventListener('mouseleave', function () { cursor.classList.remove('on'); });
+  }
+
   var saved = 'pt';
   try { saved = localStorage.getItem('lang') === 'en' ? 'en' : 'pt'; } catch (e) {}
   if (saved === 'en') setLang('en'); else renderKeys();
