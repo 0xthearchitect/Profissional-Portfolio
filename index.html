@@ -166,7 +166,7 @@
 
       <div class="ptabs" role="tablist" aria-label="Projetos" data-en-label="Projects">
         <button type="button" class="ptab" role="tab" id="tab-beatbox" aria-controls="p-beatbox" aria-selected="true"><img src="assets/projects/beatbox-logo.svg" alt="" width="36" height="36" />BeatBox <span class="stars mono" data-repo="0xthearchitect/beatbox" hidden></span></button>
-        <button type="button" class="ptab" role="tab" id="tab-mimic" aria-controls="p-mimic" aria-selected="false" tabindex="-1"><img src="assets/projects/mimic-logo.gif" alt="" width="36" height="36" />MIMIC <span class="stars mono" data-repo="0xthearchitect/Mimic" hidden></span></button>
+        <button type="button" class="ptab" role="tab" id="tab-mimic" aria-controls="p-mimic" aria-selected="false" tabindex="-1"><img src="assets/projects/mimic-logo.gif" alt="" width="36" height="36" />Mimic <span class="stars mono" data-repo="0xthearchitect/Mimic" hidden></span></button>
         <button type="button" class="ptab" role="tab" id="tab-pocketme" aria-controls="p-pocketme" aria-selected="false" tabindex="-1"><img src="assets/projects/pocketme-logo.png" alt="" width="36" height="36" />pocketme <span class="stars mono" data-repo="0xthearchitect/Pocketme" hidden></span></button>
         <button type="button" class="ptab" role="tab" id="tab-caradbela" aria-controls="p-caradbela" aria-selected="false" tabindex="-1"><img src="assets/projects/caradbela-icon.svg" alt="" width="36" height="36" />CaraDBela <span class="stars mono" data-repo="Reinvicta-Tech/caraDBela" hidden></span></button>
         <button type="button" class="ptab" role="tab" id="tab-calma" aria-controls="p-calma" aria-selected="false" tabindex="-1"><img src="assets/projects/calma-logo.png" alt="" width="36" height="36" />C.A.L.M.A. <span class="stars mono" data-repo="0xadamastor/C.A.L.M.A." hidden></span></button>
@@ -203,27 +203,27 @@
       <div class="panel theme-mimic" role="tabpanel" id="p-mimic" aria-labelledby="tab-mimic" hidden>
         <div class="panel-id">
           <img class="panel-logo" src="assets/projects/mimic-logo.gif" alt="" width="110" height="110" />
-          <h3 class="pname" style="letter-spacing:.12em">MIMIC</h3>
+          <h3 class="pname"><img class="pname-mark" src="assets/projects/mimic-wordmark.svg" alt="Mimic" width="483" height="182" /></h3>
           <p class="tag">On stage, everyone thinks they’re the star. But the only thing they are, is the show.</p>
-          <p class="desc" data-en="A honeypot. Attackers think they found a real server; everything they type is recorded.">Um honeypot. Quem ataca julga que encontrou um servidor verdadeiro; tudo o que escreve fica gravado.</p>
+          <p class="desc" data-en="A honeypot. Attackers think they found a real server; everything they type is recorded, and a theatre-style dashboard shows who is in the audience.">Um honeypot. Quem ataca julga que encontrou um servidor verdadeiro; tudo o que escreve fica gravado, e um dashboard em forma de teatro mostra quem está na plateia.</p>
           <dl class="facts">
-            <dt class="mono">stack</dt><dd>Python 3.11</dd>
-            <dt class="mono" data-en="runs on">corre em</dt><dd data-en="Windows and Linux">Windows e Linux</dd>
-            <dt class="mono" data-en="logs">registos</dt><dd data-en="JSON, per session">JSON, por sessão</dd>
+            <dt class="mono">stack</dt><dd>Python · asyncio · aiohttp</dd>
+            <dt class="mono" data-en="runs on">corre em</dt><dd data-en="Windows, Linux, Docker">Windows, Linux, Docker</dd>
+            <dt class="mono" data-en="logs">registos</dt><dd data-en="JSON Lines + SQLite">JSON Lines + SQLite</dd>
           </dl>
           <a class="repo-link" href="https://github.com/0xthearchitect/Mimic" target="_blank" rel="noopener"><span data-en="See it on GitHub">Ver no GitHub</span> ↗</a>
         </div>
         <div class="panel-how">
           <div class="mimic-shots">
-            <figure class="shot a" style="aspect-ratio:1207/831"><img src="assets/projects/mimic-config.png" alt="Configurador do Mimic: identidade, serviços e opções" data-en-alt="Mimic configurator: identity, services and options" width="1207" height="831" loading="lazy" /></figure>
-            <figure class="shot b" style="aspect-ratio:1202/832"><img src="assets/projects/mimic-show.png" alt="Mimic a correr: THE SHOW IS ON, atividade em direto" data-en-alt="Mimic running: THE SHOW IS ON, live activity" width="1202" height="832" loading="lazy" /></figure>
+            <figure class="shot a" style="aspect-ratio:1200/750"><img src="assets/projects/mimic-stage.png" alt="Dashboard do Mimic, The Stage: o guião das visitas e a plateia, onde a fila diz até onde cada atacante chegou (dados de exemplo)" data-en-alt="Mimic dashboard, The Stage: the script of visits and the house, where the row says how deep each attacker got (sample data)" width="1200" height="750" loading="lazy" /></figure>
+            <figure class="shot b" style="aspect-ratio:1200/750"><img src="assets/projects/mimic-lostfound.png" alt="Dashboard do Mimic, Lost &amp; Found: ficheiros deixados pelos atacantes e as passwords mais tentadas (dados de exemplo)" data-en-alt="Mimic dashboard, Lost &amp; Found: files attackers left behind and the most-tried passwords (sample data)" width="1200" height="750" loading="lazy" /></figure>
           </div>
           <div class="how">
             <span class="mono" data-en="how it works">como funciona</span>
             <ol>
-              <li><b class="n">01</b><b data-en="Wear a mask">Escolhe a máscara</b><span data-en="Pick the services to fake and their banners, in a visual configurator.">Os serviços a fingir e os banners, num configurador visual.</span></li>
-              <li><b class="n">02</b><b data-en="Play the part">Faz o papel</b><span data-en="Fake shell, fake files, human-like delays. It feels real.">Shell falsa, ficheiros falsos, atrasos humanos. Parece real.</span></li>
-              <li><b class="n">03</b><b data-en="Keep the record">Guarda tudo</b><span data-en="Every credential and command lands in a JSON log.">Cada credencial e comando fica num registo JSON.</span></li>
+              <li><b class="n">01</b><b data-en="Wear a mask">Escolhe a máscara</b><span data-en="Hostname, fake account and which doors to open (SSH, FTP, Telnet…), written as a theatre programme.">Hostname, conta falsa e que portas abrir (SSH, FTP, Telnet…), escritos como um programa de teatro.</span></li>
+              <li><b class="n">02</b><b data-en="Play the part">Faz o papel</b><span data-en="Fake shell, fake files, human-like delays. It feels real; captured files are kept and hashed, never run.">Shell falsa, ficheiros falsos, atrasos humanos. Parece real; os ficheiros capturados ficam guardados e com hash, nunca executados.</span></li>
+              <li><b class="n">03</b><b data-en="Watch the audience">Vê a plateia</b><span data-en="Each visitor gets a seat: the closer to the stage, the deeper they got. One click blocks them on every door.">Cada visitante ganha um lugar: quanto mais perto do palco, mais fundo foi. Um clique bloqueia-o em todas as portas.</span></li>
             </ol>
           </div>
         </div>

@@ -108,7 +108,7 @@ details[open] .arrow { transform: rotate(180deg); }
 .stars { font-size: 12px; font-weight: 400; opacity: .75; }
 .panel { --bg: #0b0a12; --fg: #f2f0ff; --accent: #9c8bff; --frame: #2c2650; background: var(--bg); color: var(--fg); border-radius: 20px; padding: clamp(24px, 3.4vw, 48px); display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 56px; animation: rise .5s cubic-bezier(.2, .7, .2, 1) both; }
 .panel[hidden] { display: none; }
-.theme-mimic { --bg: #000; --fg: #fff; --accent: #3de0c5; --frame: #fff; outline: 1.5px solid rgba(255, 255, 255, .35); outline-offset: -1.5px; }
+.theme-mimic { --bg: #0C0B0E; --fg: #fff; --accent: #51C897; --frame: #fff; outline: 1.5px solid rgba(255, 255, 255, .35); outline-offset: -1.5px; }
 .theme-pocketme { --bg: #1b1b3a; --fg: #f0f0ff; --accent: #8b8bff; --frame: #33335e; }
 .theme-caradbela { --bg: #e8f0fb; --fg: #11233f; --accent: #2672d6; --frame: #c9d8ef; }
 .theme-calma { --bg: #e9e8e4; --fg: #0b0b0c; --accent: #8f1116; --frame: #d3d1cb; }
@@ -130,7 +130,9 @@ details[open] .arrow { transform: rotate(180deg); }
 .mimic-shots { position: relative; aspect-ratio: 16 / 10; }
 .mimic-shots .shot { position: absolute; border: 2px solid #fff; border-radius: 8px; box-shadow: none; }
 .mimic-shots .a { left: 0; top: 0; width: 78%; }
-.mimic-shots .b { right: 0; bottom: 0; width: 52%; box-shadow: -4px 0 0 #ff4fa3, 4px 0 0 #3de0c5, 0 30px 60px -20px #000; }
+.mimic-shots .b { right: 0; bottom: 0; width: 52%; box-shadow: -4px 0 0 #CC5392, 4px 0 0 #51C897, 0 30px 60px -20px #000; }
+/* Mimic's own wordmark (assets: Mimic repo, assets/brand); its glitched second i-dot is part of the logo */
+.pname-mark { display: block; height: 64px; width: auto; }
 .calma-card { background: #fff; border-radius: 12px; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 40px; }
 .calma-card > div { display: flex; flex-direction: column; gap: 6px; }
 .calma-card > div span { font-size: 13px; color: #55565a; }
